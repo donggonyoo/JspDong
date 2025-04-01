@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<ul>
+  <li> <a href="http://localhost:8080/servletStudy/GetServlet">이동</a></li>
+  <li> <a href="/servletStudy/GetServlet">이동2</a></li>
+  <li> <a href="/GetServlet">이동3(오류)</a></li>
+  <!-- url에서 /로 시작하면 Tomcat은 ContextPath(프로젝트명)로 인식함 -->
+  <li> <a href="GetServlet">이동4(오류)</a></li>
+  <!-- http://localhost:8080/servletStudy/ex03_parameter/client.html
+  	==>http://localhost:8080/servletStudy/ex03_parameter/ GetServlet 요청
+  	==>정상접근 : http://localhost:8080/servletStudy/ GetServlet
+  	urlmapping HTML경로에 따라 오류가날수도 안날수도있음
+   -->
+  
+  <!-- GetServlet 호출 -->
+</ul>
+<div>
+	<a href="/servletStudy/GetServlet?model=냉장고&price=200">파라미터전송</a>
+	<!-- query(?) 이후 : 파라미터 -->
+</div>
+<div>
+	<form action="/servletStudy/GetServlet">
+	<label for="model">모델명</label>
+	<input type="text" id="model" name="model" placeholder="모델명">
+	<label for="price">가격</label>
+	<input type="text" id="price" name="price" placeholder="가격(원)">
+	<button type="submit">파라미터 전송</button>
+	</form>
+</div>
+<hr>
+<br><br>
+<h3>Post 방식으로 전송</h3>
+<div>
+<!-- action 쪽으로 요청을 보냄 --><!-- method : "전송방식" -->
+ <!-- PostServlet의 doPost(request,response)가 실행될것임 -->
+	<form action="/servletStudy/PostServlet" method="post">
+	<label for="model">모델명</label>
+	<input type="text" id="model" name="model" placeholder="모델명">
+	<label for="price">가격</label>
+	<input type="text" id="price" name="price" placeholder="가격(원)">
+	<button type="submit">파라미터 전송</button>
+	</form>
+</div>
+
+</body>
+</html>
