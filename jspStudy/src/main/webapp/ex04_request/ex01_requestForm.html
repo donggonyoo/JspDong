@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>request 객체 : 클라이언트의 요청정보를 저장하고있는 객체</h2>
+<!-- submit 시 ex01_request.jsp로 보낸다 -->
+<!-- method = post( URL에 정보가노출X) -->
+<form action="ex01_request.jsp" method="post"> 
+	<!-- name : 파라미터값(서버로전송되는값) -->
+	이름:<input type="text" name="name"><br>
+	나이:<input type="text" name="age"><br>
+	
+	성별:<label for="ma">
+		<input type="radio" name="gender" value="1" id="ma">남
+		</label>
+		
+		<label for="fa">
+		<input type="radio" name="gender" value="2" id="fa">여<br>
+		</label>
+		
+	취미:<input type="checkbox" name="hobby" value="trip">여행
+		<input type="checkbox" name="hobby"value="cook">요리
+		<input type="checkbox" name="hobby"value="read">독서
+		<input type="checkbox" name="hobby"value="soccer">축구<br>
+	출생년도 : <select name="year">
+	<option>1995</option><option>1996</option><option>1997</option>
+	<option>1998</option><option>1999</option><option>2000</option>
+	<option>2001</option><option>2002</option><option>2003</option>
+	</select>
+	<input type="submit" value="전송">
+</form>
+
+</body>
+</html>
