@@ -1,0 +1,33 @@
+1.해당페이지 errorPage="errorPage.jsp" 처리
+2.HTML errorcode : 404 , 500 오류발생시
+3.예외객체별 NumverFormatException
+4.error 처리를 안한경우
+
+ex01_error.jsp : Integer.parseInt("abc")'
+예외객체 : NumberFormatException
+예외코드 : 500
+error Page로설정 -호출
+
+
+ex02_error.jsp : Integer.parseInt("abc")'
+예외객체 : NumberFormatException
+예외코드 : 500
+web.xml
+
+ex02_error.jsp : str.trim() , str , null값
+예외객체 : NullpointerException
+예외코드 : 500
+web.xml
+
+====================================
+error 페이지 설정시 우선순위
+
+1.해당페이지에서 오류페이지설정 : <%@page errorPage="errorPage.jsp" %>
+
+2.web.xml에서 예외클래스별로 설정
+<error-page><exception-type>..
+
+3.web.xml에서 HTTP오류코드로 설정 시
+<error-page><error-code>..
+
+4.WAS에서 제공해주는 에러페이지
