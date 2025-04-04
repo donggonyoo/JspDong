@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,13 +19,17 @@ if(session.getAttribute("date")==null){
 %>
 <script type="text/javascript">
 alert('등록된 날짜X');
-history.go(-1);
+history.go(-1); //전페이지로
 </script>
 
 <%
 }else{
 %>
-<%= session.getAttribute("date") %>
+<% Date date = (Date)session.getAttribute("date");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	String d  = sdf.format(date);
+%>
+<%= d %>
 <%session.removeAttribute("date"); } %>
 
 

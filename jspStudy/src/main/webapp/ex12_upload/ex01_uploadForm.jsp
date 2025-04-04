@@ -36,7 +36,7 @@
 <script type="text/javascript">
 $("#filename").on("change",function(){
 	let filename = $(this).val();
-	let extname = filename.substring(filename.lastIndexOf(".")+1).toLowerCase();
+	let extname = filename.substring(filename.lastIndexOf(".")+1).toLowerCase();//확장자만 가져옴
 	let acceptList = ["jpg","jpeg","png","gif","tif"];
 	if($.inArray(extname,acceptList)== -1){
 		alert("이미지만 첨부");
