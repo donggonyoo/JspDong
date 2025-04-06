@@ -21,3 +21,4 @@ function input_check(f){
 	}
 	return true;//아이디비번이름이 입력됐다면 true
 }
+

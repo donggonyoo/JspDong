@@ -20,7 +20,7 @@
 	Class.forName("org.mariadb.jdbc.Driver");//JDBC Drive 클래스 로드
 
 	Connection conn = DriverManager.getConnection
-	("jdbc:mariadb://localhost:3306/gdjdb","gduser","1234"); //db와연결
+	("jdbc:mariadb://localhost:3306/dong","dong","1234"); //db와연결
 	//gdjdb : DB명  , gduser:유저명 , 1234 : 비번)
 	
 	PreparedStatement pstmt = conn.prepareStatement("select * from professor");

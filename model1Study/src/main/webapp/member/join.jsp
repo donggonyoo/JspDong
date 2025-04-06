@@ -34,6 +34,7 @@ String msg = "회원가입 실패";
 String url = "joinForm.jsp";
 
 if(dto.insert(mem)){//true : DB등록성공  
+	session.setAttribute("m", mem.getName());
 	msg = "회원가입 성공";
 	url = "loginForm.jsp"; //해당페이지로이동
 }

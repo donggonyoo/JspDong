@@ -8,6 +8,7 @@
 </head>
 <body>
 <h3>안녕</h3>
+<%= session.getAttribute("m")+"님 회원가입성공"%>
 
 
 </body>

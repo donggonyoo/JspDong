@@ -24,7 +24,6 @@ public class MemberDto {
 			pstmt.setString(6, mem.getEmail());
 			pstmt.setString(7, mem.getPicture());
 			if(pstmt.executeUpdate()>0) { 
-				//select을 제외한 쿼리문 실행(변경된 요소 수 반환)
 				return true;
 			}
 			else return false;
