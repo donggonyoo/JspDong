@@ -1,9 +1,11 @@
 package model.test0404;
 
-public class Book {
+public class Book { //Bean class , DTO
+	
 	private String writer;
 	private String title;
 	private String content;
+	
 	public String getWriter() {
 		return writer;
 	}

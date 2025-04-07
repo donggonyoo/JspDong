@@ -6,7 +6,12 @@
 <meta charset="UTF-8">
 <title>방명록 글쓰기 화면</title>
 <link rel="stylesheet" href="../css/main.css" >
+<style type="text/css">
+td{
+	background-color: #8080c0; 	color : white;
+}
 
+</style>
 </head>
 <body>
 <form action="test1.jsp" method="post" 

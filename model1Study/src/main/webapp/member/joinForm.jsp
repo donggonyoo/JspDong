@@ -15,6 +15,7 @@ return input_check(this) : input_check()함수 호출 , 매개변수this : form�
 <form action="join.jsp" name="f" method="post" onsubmit="return input_check(this)">
 	<input type="hidden" name="picture" value="">
 	<table>
+	<caption>회원가입</caption>
 		<tr>
 		<td rowspan="4" valign="bottom">
 		<img src="" width="100" height="120"  id="pic"><br>
