@@ -40,7 +40,11 @@
 			msg= mem.getName()+"님이 로그인 하셨습니다";
 			url = "main.jsp";
 		}
-		else{ msg = "비밀번호가 틀려요";}
+		else{
+			msg = "비밀번호가 틀려요";
+			//url = "loginForm.jsp";
+			
+			}
 	}
 
 	%>

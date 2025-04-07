@@ -21,11 +21,10 @@
 </table>
 </form>
 
-<%--
+<!--
  1.input check(this)
  2.win_open('pwForm')
- --%>
- 
+ -->
  <script>
  function input_check(f){
 	if(f.id.value.trim() == ""){
@@ -33,7 +32,8 @@
 		f.id.focus();
 		return false;
 	}
-	else if(f.pass.value.trim() == ""){
+	else if(f.pass.value.trim() == "" ){
+		//f.pass.value.trim().length <= 0
 		alert("비번입력");
 		return false;
 	}

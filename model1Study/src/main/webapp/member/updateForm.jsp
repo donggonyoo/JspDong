@@ -59,15 +59,6 @@ Member mem = new MemberDto().selectOne(id);
 	<% } }%>
 </table>
 </form>
-<script>
-function win_upload(){
-	
-}
-function input_check(f){
-	
-}
-
-</script>
 
 
 </body>

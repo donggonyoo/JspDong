@@ -31,6 +31,7 @@ location.href = "loginForm.jsp";
 </script>
 
 <!-- login회원과 파라미터의id가 일치하지않으며 ,login정보가 admin이 아닌경우 -->
+<!-- 즉admin이  아닌 회원은 자신의 정보만 조회가능하단 뜻 -->
 <%}else if(!id.equals(login) && !login.equals("admin")){ %>
 <script>
 alert("자신의정보만 확인 가능합니다");
@@ -39,6 +40,7 @@ location.href = "main.jsp";
 
 
 <!-- login정보가 admin이거나 , login정보와 id가 일치하는경우 -->
+<!-- session(login정보)가 admin인 회원은 파라미터를변경해 다른회원 조회가능 -->
 <% }else{
 	Member mem = new MemberDto().selectOne(id);
 %>
