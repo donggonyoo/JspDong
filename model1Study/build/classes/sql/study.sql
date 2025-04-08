@@ -12,6 +12,9 @@ create table member(
 select * from member;
 desc member;
 
+
+
+
 /*---------------------book table-----------------*/
 create table book(
  writer varchar(100) primary key,

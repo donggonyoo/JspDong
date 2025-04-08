@@ -112,18 +112,17 @@ public class MemberDto {
 		ResultSet rs = null;
 		Member m1 = new Member();
 		String sSql = "select * from member where id=?";
-		String uSql = "update member set pass=?,name=?,gender=?"
+		String uSql = "update member set name=?,gender=?"
 				+ " ,tel=?,email=?,picture=? where id=?";
 		try {
 			
 			psmtIns = conn.prepareStatement(uSql);
-			psmtIns.setString(1,mem.getPass());
-			psmtIns.setString(2,mem.getName());
-			psmtIns.setInt(3,mem.getGender());
-			psmtIns.setString(4,mem.getTel());
-			psmtIns.setString(5,mem.getEmail());
-			psmtIns.setString(6,mem.getPicture());
-			psmtIns.setString(7,mem.getId());
+			psmtIns.setString(1,mem.getName());
+			psmtIns.setInt(2,mem.getGender());
+			psmtIns.setString(3,mem.getTel());
+			psmtIns.setString(4,mem.getEmail());
+			psmtIns.setString(5,mem.getPicture());
+			psmtIns.setString(6,mem.getId());
 			psmtIns.executeUpdate();//where문의 id이름
 			psmtIns.close();//psmt를 다사용했다면 닫아두자
 			
@@ -149,5 +148,26 @@ public class MemberDto {
 			DBConnection.close(conn, psmtSel, rs);
 		}
 		return null;
+	}
+	
+	public boolean delete(String id) {
+		Connection conn = DBConnection.getConnection();
+		PreparedStatement psmt = null;
+		String sql = "delete from member where id=?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			if(psmt.executeUpdate()>0) {
+				return true;
+			}
+			return false;	
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBConnection.close(conn, psmt, null);
+		}
+		return false;
 	}
 }

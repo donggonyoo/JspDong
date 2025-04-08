@@ -24,7 +24,8 @@ String login = (String)session.getAttribute("login");//login세션정보를 가�
 	Member mem = new Member();
 	mem.setId(request.getParameter("id"));
 	
-if(login.equals("admin")){//session정보(로그인된 아이디) == admin이라면
+if(login.equals("admin")){
+	//session정보(로그인된 아이디) == admin이라면
 //session의 정보를가지고 DB에서 레코드를 가져옴
 	Member mem2 = new MemberDto().selectOne(login);
 	//레코드의 Pass와 파라미터(입력된)Pass가 같다면
@@ -35,14 +36,13 @@ if(login.equals("admin")){//session정보(로그인된 아이디) == admin이라
 	else{%>
 	<script type="text/javascript">
 	alert("비밀번호오류");
-	location.href = "updateForm.jsp?id=<%=login%>";
+	location.href = "list.jsp";
 	</script>
 <% 
 	}
 }
-
 //session정보가 admin이 아니라면
-else{
+else if(!login.equals("admin")){
 	mem.setPass(request.getParameter("pass"));
 } 	
 
@@ -50,6 +50,8 @@ mem.setName(request.getParameter("name"));
 mem.setGender(Integer.parseInt(request.getParameter("gender")));
 mem.setTel(request.getParameter("tel"));
 mem.setEmail(request.getParameter("email"));
+mem.setPicture(request.getParameter("picture"));
+
 
 Member mem2 = new MemberDto().update(mem);//
 if(mem2 ==null){%>

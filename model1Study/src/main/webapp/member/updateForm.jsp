@@ -37,9 +37,10 @@ location.href="main.jsp";
 <%} else {
 Member mem = new MemberDto().selectOne(id);
 %>
-<form action="update.jsp" method="post" onsubmit="return input_check(this)">
+<form action="update.jsp" name="f" method="post" onsubmit="return input_check(this)">
 <table><caption>회원정보수정</caption>
 <tr><td rowspan="4" valign="bottom">
+	<input type="hidden" name="picture" value="<%=mem.getPicture()%>">
 	<img src="picture/<%=mem.getPicture()%>" width="100" height="120" id="pic"><br>
 	<font sizeie="1"><a href="javascript:win_upload()">사진수정</a></font>
 	</td><th>아이디</th><td><input type="text" name ="id" value="<%=mem.getId() %>" readonly></td></tr>
@@ -60,6 +61,12 @@ Member mem = new MemberDto().selectOne(id);
 </table>
 </form>
 
-
+<script type="text/javascript">
+function win_upload(){
+	let op = "width=500,height=500 ,top=50 ,left=150";
+	open("pictureForm.jsp","",op);
+	
+}
+</script>
 </body>
 </html>
