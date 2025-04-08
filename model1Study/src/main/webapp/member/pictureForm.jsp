@@ -18,6 +18,7 @@
 	<input type="submit" value="사진등록">
 </form></td></tr>
 </table>
+
 <script type="text/javascript">
 let imagefile = document.querySelector('#imageFile');
 let preview = document.querySelector('#preview');

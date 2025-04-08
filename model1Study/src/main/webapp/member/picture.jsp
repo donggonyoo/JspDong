@@ -26,7 +26,7 @@ MultipartRequest multi = new MultipartRequest
 	(request,path,10*1024*1024,"utf-8",new DefaultFileRenamePolicy());
 
 fname = multi.getFilesystemName("picture");
-//파라미터가picture인 저장할떄의 파일명
+//getFilesystemName("picture") 파라미터가picture인 저장할떄의 파일명
 %>
 
 
