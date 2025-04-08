@@ -37,7 +37,7 @@ return input_check(this) : input_check()함수 호출 , 매개변수this : form�
 		<tr><th>이메일</th><td colspan="2"><input type="text" name="email"></td></tr>
 		<!-- button태그의 기본type : submit임 -->
 		<tr><td colspan="3"><button>회원가입</button></td></tr>
-	</table>
+	</table><!-- -zzz -->
 </form>
 <script src="joinFormJS.js"></script>
 </body>

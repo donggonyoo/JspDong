@@ -109,7 +109,6 @@ public class MemberDto {
 		Connection conn = DBConnection.getConnection();
 		PreparedStatement psmtSel = null;
 		PreparedStatement psmtIns= null;
-		PreparedStatement psmtDel = null;
 		ResultSet rs = null;
 		Member m1 = new Member();
 		String sSql = "select * from member where id=?";
@@ -125,11 +124,12 @@ public class MemberDto {
 			psmtIns.setString(5,mem.getEmail());
 			psmtIns.setString(6,mem.getPicture());
 			psmtIns.setString(7,mem.getId());
-			psmtIns.executeUpdate();//삽입
+			psmtIns.executeUpdate();//where문의 id이름
+			psmtIns.close();//psmt를 다사용했다면 닫아두자
 			
 			psmtSel = conn.prepareStatement(sSql);
 			psmtSel.setString(1, mem.getId());
-			rs = psmtSel.executeQuery();
+			rs = psmtSel.executeQuery(); //select문실행
 			 while(rs.next()) {
 				 m1.setId(rs.getString(1));
 				 m1.setPass(rs.getString(2));

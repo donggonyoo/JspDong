@@ -19,32 +19,39 @@
 </head>
 <body>
 <% request.setCharacterEncoding("UTF-8");
-String login = (String)session.getAttribute("login");
+String login = (String)session.getAttribute("login");//login세션정보를 가져옴
 
 	Member mem = new Member();
 	mem.setId(request.getParameter("id"));
 	
-if(login.equals("admin")){
+if(login.equals("admin")){//session정보(로그인된 아이디) == admin이라면
+//session의 정보를가지고 DB에서 레코드를 가져옴
 	Member mem2 = new MemberDto().selectOne(login);
+	//레코드의 Pass와 파라미터(입력된)Pass가 같다면
 	if(mem2.getPass().equals(request.getParameter("pass"))){
 		mem.setPass(mem2.getPass());
 	}
+	//입력된 get.Parameter("pass")와 admin의Pass가 다르다면
 	else{%>
 	<script type="text/javascript">
 	alert("비밀번호오류");
 	location.href = "updateForm.jsp?id=<%=login%>";
 	</script>
 <% 
-	}		
+	}
 }
-else{mem.setPass(request.getParameter("pass"));}
+
+//session정보가 admin이 아니라면
+else{
+	mem.setPass(request.getParameter("pass"));
+} 	
 
 mem.setName(request.getParameter("name"));
 mem.setGender(Integer.parseInt(request.getParameter("gender")));
 mem.setTel(request.getParameter("tel"));
 mem.setEmail(request.getParameter("email"));
 
-Member mem2 = new MemberDto().update(mem);
+Member mem2 = new MemberDto().update(mem);//
 if(mem2 ==null){%>
 <script>
 alert("회원정보 수정 실패");
