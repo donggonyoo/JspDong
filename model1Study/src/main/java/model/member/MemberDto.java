@@ -105,51 +105,29 @@ public class MemberDto {
 		return null;
 	}
 	
-	public Member update(Member mem) {
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement psmtSel = null;
-		PreparedStatement psmtIns= null;
-		ResultSet rs = null;
-		Member m1 = new Member();
-		String sSql = "select * from member where id=?";
-		String uSql = "update member set name=?,gender=?"
-				+ " ,tel=?,email=?,picture=? where id=?";
-		try {
-			
-			psmtIns = conn.prepareStatement(uSql);
-			psmtIns.setString(1,mem.getName());
-			psmtIns.setInt(2,mem.getGender());
-			psmtIns.setString(3,mem.getTel());
-			psmtIns.setString(4,mem.getEmail());
-			psmtIns.setString(5,mem.getPicture());
-			psmtIns.setString(6,mem.getId());
-			psmtIns.executeUpdate();//where문의 id이름
-			psmtIns.close();//psmt를 다사용했다면 닫아두자
-			
-			psmtSel = conn.prepareStatement(sSql);
-			psmtSel.setString(1, mem.getId());
-			rs = psmtSel.executeQuery(); //select문실행
-			 while(rs.next()) {
-				 m1.setId(rs.getString(1));
-				 m1.setPass(rs.getString(2));
-				 m1.setName(rs.getString(3));
-				 m1.setGender(rs.getInt(4));
-				 m1.setTel(rs.getString(5));
-				 m1.setEmail(rs.getString(6));
-				 m1.setPicture(rs.getString(7));
-			 }
-			 return m1;
+		public boolean update(Member mem) {
+			Connection conn = DBConnection.getConnection();
+			PreparedStatement pstmt = null;
+			String sql = "update member set name=?,gender=?,tel=?,email=?,"
+					+ "picture=? where id=?";
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, mem.getName());
+				pstmt.setInt(2, mem.getGender());
+				pstmt.setString(3, mem.getTel());
+				pstmt.setString(4, mem.getEmail());
+				pstmt.setString(5, mem.getPicture());
+				pstmt.setString(6, mem.getId());
+				return pstmt.executeUpdate() > 0;
+			} catch(Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBConnection.close(conn, pstmt, null);
+			}
+			return false;
+		}
 	
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			DBConnection.close(conn, psmtSel, rs);
-		}
-		return null;
-	}
-	
+		
 	public boolean delete(String id) {
 		Connection conn = DBConnection.getConnection();
 		PreparedStatement psmt = null;
@@ -169,5 +147,54 @@ public class MemberDto {
 			DBConnection.close(conn, psmt, null);
 		}
 		return false;
+	}
+
+
+	public String idSearch(String name , String tel) {
+		Connection con = DBConnection.getConnection();
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "select id from member where name=? and tel=?";
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, name);
+			psmt.setString(2,tel);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString("id");
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBConnection.close(con, psmt, rs);
+		}
+		return null;
+	}
+
+	public String pwSearch(String id,String tel,String email) {
+		Connection con = DBConnection.getConnection();
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		String sql = "select pass from member where id=? and tel=? and email=?";
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, id);
+			psmt.setString(2, tel);
+			psmt.setString(3,email);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString("pass");
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBConnection.close(con, psmt, rs);
+		}
+		return null;
+		
 	}
 }

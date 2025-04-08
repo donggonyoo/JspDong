@@ -36,14 +36,15 @@ for(Member m : list){
 <td><%=m.getName() %></td><td><%=m.getGender()==1?"남":"여" %></td>
 <td><%=m.getTel() %></td>
 <td><a href="updateForm.jsp?id=<%=m.getId()%>">수정</a>
-	<%if(!m.getId().equals("admin")){%>
+
+	<%if(!m.getId().equals("admin")){%><!-- id가 admin인 경우는 X -->
 	<a href="deleteForm.jsp?id=<%=m.getId()%>">강제탈퇴</a>
 	<%} %>
 </td></tr>
 
 <%} }else{ %>
 <script>
-alert("관리자만접근할수있습니다");
+alert("관리자만 접근할 수 있습니다");
 location.href="main.jsp";
 </script>
 <%} %>

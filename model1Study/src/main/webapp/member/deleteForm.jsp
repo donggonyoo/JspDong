@@ -41,7 +41,7 @@ location.href = "main.jsp"
 <form action="delete.jsp" method="post" onsubmit="return input_check(this)">
 <input type="hidden" name="id" value="<%=id %>">
 <table><caption>회원비밀번호입력</caption>
-	<tr><th>비밀번호</th>
+	<tr><th><%=login+"의 비밀번호" %></th>
 	<td><input type="password" name="pass"></td></tr>
 	<tr><td colspan="2"> <button>탈퇴하기</button> </td></tr>
 </table>

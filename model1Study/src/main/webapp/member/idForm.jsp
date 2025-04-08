@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="../css/main.css">
 <title>idForm(아이디찾기)</title>
 </head>
 <body>

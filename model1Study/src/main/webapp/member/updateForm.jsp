@@ -44,7 +44,7 @@ Member mem = new MemberDto().selectOne(id);
 	<img src="picture/<%=mem.getPicture()%>" width="100" height="120" id="pic"><br>
 	<font sizeie="1"><a href="javascript:win_upload()">사진수정</a></font>
 	</td><th>아이디</th><td><input type="text" name ="id" value="<%=mem.getId() %>" readonly></td></tr>
-	<tr><th>비밀번호</th><td><input type="password" name="pass"></td></tr>
+	<tr><th>비밀번호</th><td><input type="password" name="pass" placeholder="<%=login+"의비밀번호"%>"></td></tr>
 	<tr><th>이름</th><td><input type="text" name="name" value="<%=mem.getName()%>"></td></tr>
 	<tr><th>성별</th><td><input type="radio" name="gender" value="1" <%=mem.getGender()==1?"checked":"" %>>남
 	<input type="radio" name="gender" value="2" <%=mem.getGender()==2?"checked":"" %>>여</td></tr>

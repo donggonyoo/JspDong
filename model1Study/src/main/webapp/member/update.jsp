@@ -2,69 +2,45 @@
 <%@page import="model.member.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <!-- 
-    1.모든파라미터를 Member객체에저장
-    2.입력된비번과 DB에 저장된 비번을 비교
-    관리자인경우 관리자비밀번호로비교
-    불일치 : '비밀번호오류' 메시지 출력 후 updateForm.jsp페이지로이동
-    3.Member 객체의내용으로 DB수정 : boolean MemberDto.update(Member)
-    	성공 : 회원정보 수정완료 메시지출력후 info.jsp로 이동
-    	실패 : 회원정보 수정 실패 메시지출력 후 updateForm.jsp로이동
-     -->
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>업뎃</title>
-</head>
-<body>
-<% request.setCharacterEncoding("UTF-8");
-String login = (String)session.getAttribute("login");//login세션정보를 가져옴
-
-	Member mem = new Member();
-	mem.setId(request.getParameter("id"));
-	
-if(login.equals("admin")){
-	//session정보(로그인된 아이디) == admin이라면
-//session의 정보를가지고 DB에서 레코드를 가져옴
-	Member mem2 = new MemberDto().selectOne(login);
-	//레코드의 Pass와 파라미터(입력된)Pass가 같다면
-	if(mem2.getPass().equals(request.getParameter("pass"))){
-		mem.setPass(mem2.getPass());
-	}
-	//입력된 get.Parameter("pass")와 admin의Pass가 다르다면
-	else{%>
-	<script type="text/javascript">
-	alert("비밀번호오류");
-	location.href = "list.jsp";
-	</script>
-<% 
-	}
-}
-//session정보가 admin이 아니라면
-else if(!login.equals("admin")){
-	mem.setPass(request.getParameter("pass"));
-} 	
-
-mem.setName(request.getParameter("name"));
-mem.setGender(Integer.parseInt(request.getParameter("gender")));
-mem.setTel(request.getParameter("tel"));
-mem.setEmail(request.getParameter("email"));
-mem.setPicture(request.getParameter("picture"));
-
-
-Member mem2 = new MemberDto().update(mem);//
-if(mem2 ==null){%>
+<%-- /webapp/member/update.jsp 
+   1. 모든 파라미터를 Member 객체에 저장하기
+   2. 입력된 비밀번호와 db에 저장된 비밀번호 비교.
+       관리자로 로그인 한 경우 관리자비밀번호로 비교
+       본인 정보 수정시 본인의 비밀번호로 비교
+       불일치 : '비밀번호 오류' 메세지 출력후 updateForm.jsp 페이지 이동 
+   3. Member 객체의 내용으로 db를 수정하기 : boolean MemberDao.update(Member)
+       - 성공 : 회원정보 수정 완료 메세지 출력후 info.jsp로 페이지 이동
+       - 실패 : 회원정보 수정 실패 메세지 출력 후 updateForm.jsp 페이지 이동     
+--%>    
+<%
+  //1 모든 파라미터를 Member 객체에 저장하기
+   request.setCharacterEncoding("utf-8");
+   Member mem = new Member();
+   mem.setId(request.getParameter("id"));
+   mem.setPass(request.getParameter("pass"));
+   mem.setName(request.getParameter("name"));
+   mem.setGender(Integer.parseInt(request.getParameter("gender")));
+   mem.setTel(request.getParameter("tel"));
+   mem.setEmail(request.getParameter("email"));
+   mem.setPicture(request.getParameter("picture"));
+   //2 비밀번호를 위한 db의 데이터 조회. : login 정보로 조회하기
+   String login = (String)session.getAttribute("login");
+   MemberDto dao = new MemberDto();
+   Member dbMem = dao.selectOne(login);
+   String msg = "비밀번호 오류";
+   String url = "updateForm.jsp?id=" + mem.getId();
+   //mem.getPass() : 입력한 비밀번호
+   //dbMem.getPass() : 로그인한 아이디의 비밀번호
+   if(mem.getPass().equals(dbMem.getPass()))  {
+	  if(dao.update(mem)) { // 회원 정보 수정 성공
+		  msg = "수정 성공";
+		  url = "info.jsp?id="+mem.getId();
+	  } else {// 회원 정보 수정 실패
+		  msg = "수정 실패";
+	  }
+   }
+%>
 <script>
-alert("회원정보 수정 실패");
-location.href = "updateForm.jsp?id=<%=login%>";
+  alert("<%=msg%>")
+  location.href="<%=url%>"
 </script>
-<% }else{%>
-<script>
-alert("회원정보 수정 성공");
-location.href = "info.jsp?id=<%= request.getParameter("id")%>";
-</script>
-<%} %>
-
-</body>
-</html>
