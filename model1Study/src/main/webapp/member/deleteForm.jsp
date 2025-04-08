@@ -20,24 +20,22 @@
 request.setCharacterEncoding("UTF-8");
 String id = request.getParameter("id"); 
 String login = (String)session.getAttribute("login");
+String msg = "";
+String url ="";
 if(login==null){
-%>
-<script>
-alert("로그인 해 ");
-location.href = "loginForm.jsp";
-</script>
-<%} else if(!id.equals(login) && !login.equals("admin")){ %>
-<script>
-alert("본인만 탈퇴가능 ");
-location.href = "main.jsp";
-</script>
-<%}else if(id.equals("admin")){
-%>
-<script>
-alert("관리자는 탈퇴가 불가능")
-location.href = "main.jsp"
-</script>
-<%}else{ %>
+	msg = "로그인하세요";
+	url = "loginForm.jsp";
+} 
+else if(!id.equals(login) && !login.equals("admin")){
+	//로그인정보와 아이디가 다르고 로그인정보가admin이 아니라면
+	msg = "본인만 탈퇴가능";
+	url = "main.jsp";
+}
+else if(id.equals("admin")){ //admin은탈퇴할수없다
+	msg="관리자는 탈퇴가 불가능";
+	url ="main.jsp";
+}
+else{ %><!-- else if(id.equals(login) || login.equals("admin")) -->
 <form action="delete.jsp" method="post" onsubmit="return input_check(this)">
 <input type="hidden" name="id" value="<%=id %>">
 <table><caption>회원비밀번호입력</caption>
@@ -47,6 +45,10 @@ location.href = "main.jsp"
 </table>
 </form>
 <%} %>
+<script>
+alert("<%=msg%>");
+location.href = <%=url %>;
+</script>
 
 </body>
 </html>

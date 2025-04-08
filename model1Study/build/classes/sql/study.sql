@@ -10,9 +10,9 @@ create table member(
 
 
 select * from member;
-desc member;
+desc member; 
 
-select * from member where id="gg2";
+
 
 
 /*---------------------book table-----------------*/

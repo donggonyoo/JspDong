@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%--
+<!--
    1. 2개의 파라미터 정보를 조회하여 변수 저장
    2. 로그인 정보를 검증
       - 로그아웃 상태 : 로그인하세요. loginForm.jsp로 페이지 이동
@@ -20,7 +20,7 @@
       탈퇴 실패
           - 일반 사용자 : 탈퇴실패메시지 출력, main.jsp로 페이지 이동
           - 관리자 : 탈퇴실패메시지 출력, list.jsp로 페이지 이동
- --%>
+ -->
 <html>
 <head>
 <meta charset="UTF-8">
@@ -29,19 +29,22 @@
 <body>
 <% 
 request.setCharacterEncoding("UTF-8");
-String id  = request.getParameter("id");
-String login = (String)session.getAttribute("login");
+String id  = request.getParameter("id");//파라미터로받은 id
+String login = (String)session.getAttribute("login");//로그인정보
 String pass  = request.getParameter("pass");
 String msg="";
 String url="";
-if(login==null){
+if(login==null){//로그인없이 deleteForm에접근시
 	msg="로그인하세요";
 	url = "loginForm.jsp";
 }
+//로그인정보가 admin이 아니고 + 로그인정보가id가 다를경우
 else if(!login.equals("admin") && !id.equals(login)) {
 	msg="본인만 탈퇴가능함";
 	url="main.jsp";
-}else if(login.equals("admin")){//로그인한사람이 admin이라면
+}
+
+else if(login.equals("admin")){//로그인한사람이 admin이라면
 	Member admin = new MemberDto().selectOne(login);
 	if(!admin.getPass().equals(pass)){
 		//관리자비밀번호를 입력하지않았다면

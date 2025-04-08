@@ -23,10 +23,11 @@ if(!f.exists()){
 //new DefaultFileRenamePolicy() : 중복파일명존재시 이름변경해
 
 MultipartRequest multi = new MultipartRequest
-	(request,path,10*1024*1024,"utf-8",new DefaultFileRenamePolicy());
+	(request,path,10*1024*1024,"UTF-8",new DefaultFileRenamePolicy());
 
 fname = multi.getFilesystemName("picture");
-//getFilesystemName("picture") 파라미터가picture인 저장할떄의 파일명
+
+//getFilesystemName("picture") 파라미터가 'picture'인정보를가져옴
 %>
 
 

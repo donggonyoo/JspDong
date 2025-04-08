@@ -23,24 +23,25 @@
 request.setCharacterEncoding("UTF-8");
 String id = request.getParameter("id");
 String login = (String)session.getAttribute("login");
-if(login==null || login.equals("")){
+if(login==null || login.equals("")){ //로그인이안돼있을때를 얘기
 %>
 <script>
 alert("로그인해");
 location.href="loginForm.jsp";
 </script>
 <%}else if(!id.equals(login) && !login.equals("admin")){ %>
+<!--  아이디와 세션정보가 다르고 admin이 아니라면 -->
 <script>
 alert("내정보만 수정가능");
 location.href="main.jsp";
 </script>
-<%} else {
+<%} else { //(login.equals("admin") || id.eqals(login))
 Member mem = new MemberDto().selectOne(id);
 %>
 <form action="update.jsp" name="f" method="post" onsubmit="return input_check(this)">
 <table><caption>회원정보수정</caption>
 <tr><td rowspan="4" valign="bottom">
-	<input type="hidden" name="picture" value="<%=mem.getPicture()%>">
+	<input type="hidden" name="picture" value="<%=mem.getPicture()%>"><!-- 파라미터전달용(화면에보이지않음) -->
 	<img src="picture/<%=mem.getPicture()%>" width="100" height="120" id="pic"><br>
 	<font sizeie="1"><a href="javascript:win_upload()">사진수정</a></font>
 	</td><th>아이디</th><td><input type="text" name ="id" value="<%=mem.getId() %>" readonly></td></tr>

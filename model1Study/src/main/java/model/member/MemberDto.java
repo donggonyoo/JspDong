@@ -118,7 +118,7 @@ public class MemberDto {
 				pstmt.setString(4, mem.getEmail());
 				pstmt.setString(5, mem.getPicture());
 				pstmt.setString(6, mem.getId());
-				return pstmt.executeUpdate() > 0;
+				return pstmt.executeUpdate() > 0; //변경됐다면 true가반환될것임
 			} catch(Exception e) {
 				e.printStackTrace();
 			} finally {
