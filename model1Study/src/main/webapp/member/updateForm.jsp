@@ -66,7 +66,11 @@ Member mem = new MemberDto().selectOne(id);
 function win_upload(){
 	let op = "width=500,height=500 ,top=50 ,left=150";
 	open("pictureForm.jsp","",op);
-	
+}
+
+function win_passchg(){
+	let op = "width=500,height=500 ,top=50 ,left=150";
+	open("passwordForm.jsp","",op);
 }
 </script>
 </body>

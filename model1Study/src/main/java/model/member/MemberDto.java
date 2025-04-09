@@ -197,4 +197,28 @@ public class MemberDto {
 		return null;
 		
 	}
+	
+	public boolean updatePass(String id , String pass) {
+		Connection conn = DBConnection.getConnection();
+		PreparedStatement psmt = null;
+		String sql = "update member set pass=? where id=?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, pass);
+			psmt.setString(2, id);
+			if(psmt.executeUpdate()>0) {
+				conn.commit();
+				return true;
+			}
+			return false;
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBConnection.close(conn, psmt, null);
+		}
+		return false;
+	}
 }
