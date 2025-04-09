@@ -16,7 +16,7 @@
      <input type="radio" name="gender" value="2">여<br>
  출생연도 : <select name="year">
  <c:forEach var="i" begin="1980" end="2025">
- <option>${i}</option>
+ <option>${i}</option> <!-- 1980~2025까지option에 들어감 -->
  </c:forEach>
  </select><br>
   <input type="submit" value="전송"></form>

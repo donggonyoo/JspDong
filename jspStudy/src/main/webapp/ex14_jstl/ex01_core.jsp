@@ -20,7 +20,7 @@
 -->
 
 <!-- remove : 등록된 속성 제거-->
-
+<!-- c : set의 기본 scope = pageContext -->
 <c:set var="test" value="${'Hello JSTL'}" scope="session" />
 test 속성 : ${sessionScope.test}<br>
 test 속성 : <c:out value="${test}" /><br>

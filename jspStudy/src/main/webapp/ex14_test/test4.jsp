@@ -14,7 +14,7 @@
 request.setCharacterEncoding("UTF-8"); 
 LocalDate ld = LocalDate.now();
 int now = ld.getYear();
-request.setAttribute("dt", now);
+pageContext.setAttribute("dt", now);  //page(같은페이지)영역에 속성을 지정해준다
 %>
 이름 : ${param.name}<br>
 나이 : ${param.age}<br>
@@ -30,6 +30,7 @@ request.setAttribute("dt", now);
 <br>
 출생년도 : ${param.year}<br>
 만나이 : ${dt - param.year}
+<!-- 만나이 : ${pageScope.dt - param.year} 와 같은뜻--> 
 
 
 </body>

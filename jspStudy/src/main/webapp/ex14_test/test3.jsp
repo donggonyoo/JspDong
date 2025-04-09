@@ -10,6 +10,7 @@
 <form method="post" name="f">
   x:<input type="text" name="x" value="${param.x}" size="5">
   <select name="op">
+  <!-- 선택된값을 selected 처리해줌(선택) -->
      <option value="+" <c:if test="${param.op == '+'}">selected</c:if>>+</option>
      <option value="-" <c:if test="${param.op == '-'}">selected</c:if>>-</option>
      <option value="*" <c:if test="${param.op == '*'}">selected</c:if>>*</option>
@@ -19,18 +20,18 @@
   <input type="submit" value="=">
 </form>
 <c:choose>
-	<c:when test="${param.op eq '+'}">
+	<c:if test="${param.op eq '+'}">
 		<h4>${param.x}+${param.y}=${param.x+param.y}</h4>
-	</c:when>
-	<c:when test="${param.op eq '-'}">
+	</c:if>
+	<c:if test="${param.op eq '-'}">
 		<h4>${param.x}-${param.y}=${param.x-param.y}</h4>
-	</c:when>
-	<c:when test="${param.op eq '*'}">
+	</c:if>
+	<c:if test="${param.op eq '*'}">
 		<h4>${param.x}*${param.y}=${param.x*param.y}</h4>
-	</c:when>
-	<c:when test="${param.op eq '/'}">
+	</c:if>
+	<c:if test="${param.op eq '/'}">
 		<h4>${param.x}/${param.y}=${param.x/param.y}</h4>
-	</c:when>
+	</c:if>
 </c:choose>
 
 

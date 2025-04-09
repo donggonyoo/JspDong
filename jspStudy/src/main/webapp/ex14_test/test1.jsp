@@ -16,6 +16,8 @@
   y:<input type="text" name="y" value="${param.y}">
    <input type="submit" value="더하기">  
 </form>
+
+<!-- request.setParameter("test", -->
 <c:set var="test" value="${param.x + param.y}"/>
 <c:out value="${test}"/>
 <h4>if태그를 이용하기</h4>
@@ -28,10 +30,10 @@
 <h4>choose태그이용하기</h4>
 <c:choose>
 	<c:when test="${test<0}">
-		${test}는 음수다
+		<h4>${test}는 음수다</h4>
 	</c:when>
 	<c:otherwise>
-		${test}는 양수다
+		<h4>${test}는 양수다<h4>
 	</c:otherwise>
 </c:choose>
 
