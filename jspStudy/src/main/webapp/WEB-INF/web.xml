@@ -22,12 +22,11 @@
   <location>/ex09_exception/errorNumberFormat.jsp</location> 
   </error-page>
   
-  <error-page>
-  <!-- 500(페이지에 오류발생) 오류발생시 호출되는 jsp페이지설정 -->
-  <error-code>500</error-code> <!-- 500에러발생시 -->
+  <!--  <error-page>
+ 500(페이지에 오류발생) 오류발생시 호출되는 jsp페이지설정 
+  <error-code>500</error-code>
   <location>/ex09_exception/error500.jsp</location> 
-  </error-page>
-  
+  </error-page> -->
 
   
 </web-app>
