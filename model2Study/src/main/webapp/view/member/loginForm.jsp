@@ -5,18 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>LOGIN FORM</title>
-<link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
 
 <form action="login" method="post" name="f" onsubmit="return input_check(this)">
-<table><caption>로그인</caption>
-<tr><th>아이디</th><td><input type="text" name="id"></td></tr>
-<tr><th>PW</th><td><input type="password" name="pass"></td></tr>
-<tr><td colspan="2"><button>로그인</button>
-<button type="button" onclick="location.href='joinForm'">회원가입</button>
-<button type="button" onclick="win_open('idForm')">아이디찾기</button>
-<button type="button" onclick="win_open('pwForm')">PW찾기</button>
+<table class="table">
+<tr><th>아이디</th><td><input class="form-control" type="text" name="id"></td></tr>
+<tr><th>PW</th><td><input class="form-control" type="password" name="pass"></td></tr>
+<tr><td colspan="2"><button class="btn btn-outline-secondary" >로그인</button>
+<button class="btn btn-outline-secondary" type="button" onclick="location.href='joinForm'">회원가입</button>
+<button class="btn btn-outline-secondary" type="button" onclick="win_open('idForm')">아이디찾기</button>
+<button class="btn btn-outline-secondary" type="button" onclick="win_open('pwForm')">PW찾기</button>
 </td></tr>
 </table>
 </form>
@@ -41,7 +40,7 @@
  }
  
  function win_open(page){
-	 open(page+".jsp","","width=500,height=500,top=100 left=100" );
+	 open(page,"","width=500,height=500,top=100 left=100" );
  }
  
  </script>
