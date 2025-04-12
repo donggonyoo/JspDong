@@ -10,8 +10,8 @@
 
 <form action="login" method="post" name="f" onsubmit="return input_check(this)">
 <table class="table">
-<tr><th>아이디</th><td><input class="form-control" type="text" name="id"></td></tr>
-<tr><th>PW</th><td><input class="form-control" type="password" name="pass"></td></tr>
+<tr><th>아이디</th><td><input class="form-control" type="text" name="id" ></td></tr>
+<tr><th>PW</th><td><input class="form-control" type="password" name="pass" ></td></tr>
 <tr><td colspan="2"><button class="btn btn-outline-secondary" >로그인</button>
 <button class="btn btn-outline-secondary" type="button" onclick="location.href='joinForm'">회원가입</button>
 <button class="btn btn-outline-secondary" type="button" onclick="win_open('idForm')">아이디찾기</button>

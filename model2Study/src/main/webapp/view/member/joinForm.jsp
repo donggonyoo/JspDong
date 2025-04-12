@@ -68,8 +68,12 @@ function win_upload(){
 	let op = "width=500,height=500 ,top=50 ,left=150";
 	open("pictureForm.jsp","",op);
 	//pictureForm.jsp를 연다
+}
+
+function idchk(){
 	
 }
+
 </script>
 </body>
 </html>

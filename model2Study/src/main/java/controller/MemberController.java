@@ -307,21 +307,42 @@ public class MemberController extends MskimRequestMapping {
 	
 	@RequestMapping("id")
 	public String id(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		request.setCharacterEncoding("UTF-8");
 		String name = request.getParameter("name");
+		//name="name"인 파라미터를 가져와
+		//charEncodingFilter를 만들어놨으므로 인코딩이필요없음
 		String tel = request.getParameter("tel");
-		System.out.println(name);
-		System.out.println(tel);
 		String id = dto.idSearch(name, tel);
+		//MemberDto에 가서 DB정보와비교해 가져온다
 		if(id==null) {
 			request.setAttribute("msg", "id를 찾을수없어요");
 			request.setAttribute("id", id);
-			return "search";
+			return "idSearch";
 		}
 		else {
-		request.setAttribute("msg", "id : "+id);
+		request.setAttribute("msg", name+"님의 id : "+id);
 		request.setAttribute("id", id);
-		return "search";
+		return "idSearch";
+		}
+	}
+	
+	@RequestMapping("pw")
+	public String pw(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		//name="name"인 파라미터를 가져와
+		//charEncodingFilter를 만들어놨으므로 인코딩이필요없음
+		String email = request.getParameter("email");
+		String tel = request.getParameter("tel");
+		String pass = dto.pwSearch(id, tel, email);
+		//MemberDto에 가서 DB정보와비교해 가져온다
+		if(pass==null) {
+			request.setAttribute("msg", "password를 찾을수없어요");
+			request.setAttribute("pass", pass);
+			return "pwSearch";
+		}
+		else {
+		request.setAttribute("msg", id+"님의 password : "+pass);
+		request.setAttribute("pass", pass);
+		return "pwSearch";
 		}
 	}
 	

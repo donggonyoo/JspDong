@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <script>
 alert("${msg}")
-opener.document.f.id.value = "${id}"
+//requestScope.msg
+opener.document.f.pass.value = "${pass}"
+//requestScope.pass
 self.close();
 </script>
