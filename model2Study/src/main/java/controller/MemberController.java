@@ -329,7 +329,6 @@ public class MemberController extends MskimRequestMapping {
 	public String pw(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		//name="name"인 파라미터를 가져와
-		//charEncodingFilter를 만들어놨으므로 인코딩이필요없음
 		String email = request.getParameter("email");
 		String tel = request.getParameter("tel");
 		String pass = dto.pwSearch(id, tel, email);
@@ -347,7 +346,4 @@ public class MemberController extends MskimRequestMapping {
 	}
 	
 
-	
-	
-	
 }
