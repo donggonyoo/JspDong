@@ -14,6 +14,8 @@ public class DBConnection {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection(
 					"jdbc:mariadb://localhost:3306/gdjdb","gduser","1234");
+			//"jdbc:mariadb://localhost:3306/dg","donggon","1120"
+			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
