@@ -60,7 +60,22 @@ public class MemberController extends MskimRequestMapping {
 	  /member/joinForm url 정보를 이용해 /webapp/view/member/joinForm.jsp 페이지가 
 	 * 			view로 설정되도록 구현
 	 */
-	//==    =       = 	=    =       = 	=    =       = 	=    =       = 	=    =       = 	=    =       = 	=    =       = 	
+	//==    =       = 	=    =       = 	=    =       = 	=    =       = 	=    =       = 	=    =       = 	=    =       =
+	
+	@RequestMapping("loginForm") 
+	public String loginForm(HttpServletRequest request, HttpServletResponse response ) {
+		String login = (String)request.getSession().getAttribute("login");
+		if(login!= null) {
+			request.setAttribute("msg", "이미로그인했어요");
+			request.setAttribute("url", "member/main");
+			return "alert";	
+		}
+		else {
+			return "member/loginForm";
+		}
+	}
+		
+	
 	@RequestMapping("login")
 	public String login(HttpServletRequest request, HttpServletResponse response ) {
 		HttpSession session = request.getSession(); 

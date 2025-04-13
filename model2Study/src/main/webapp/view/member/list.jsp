@@ -27,7 +27,7 @@
 			<c:forEach var="mem" items="${list}"> <%--멤버객체가있는 list --%> 
 				<tr>
 					<td><a href="info?id=${mem.id}">${mem.id}</a></td>
-					<td><img src="../picture/${mem.picture}" width="30" height="30"></td>
+					<td><img src="${pageContext.request.contextPath}/picture/${mem.picture}" width="30" height="30"></td>
 					<td>${mem.name}</td>
 					<td>${mem.gender==1?"남":"여"}</td>
 					<td>${mem.tel}</td>

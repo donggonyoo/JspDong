@@ -12,7 +12,7 @@
 <table><caption>회원정보수정</caption>
 <tr><td rowspan="4" valign="bottom">
 	<input type="hidden" name="picture" value="${mem.picture}">
-	<img src="/picture/${mem.picture}>" width="100" height="120" id="pic"><br>
+	<img src="../picture/${mem.picture}>" width="100" height="120" id="pic"><br>
 	<font sizeie="1"><a href="javascript:win_upload()">사진수정</a></font>
 	</td><th>아이디</th><td><input type="text" name ="id" value="${mem.id}" readonly></td></tr>
 	<tr><th>비밀번호</th><td><input type="password" name="pass" placeholder="${sessionScope.login}의 비밀번호"></td></tr>

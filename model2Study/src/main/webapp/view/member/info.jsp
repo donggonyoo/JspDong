@@ -23,7 +23,10 @@ request.setAttribute("mem",Member객체)
 	
 <table><caption>회원정보</caption>
 <tr><td rowspan="6" width="30%">
-	<img src="picture/${mem.picture}" width="200" height="210"></td>
+	<img src="${pageContext.request.contextPath}/picture/${mem.picture}" width="200" height="210"></td>
+<%--현재 웹 애플리케이션의 context path(루트경로)를 문자열로 반환 
+	/model2Study/picture 가 반환될것임 (이걸 해야 url로 접근시 사진이안뜨는문제를 막음)
+--%>
 	<th width="20%">아이디</th><td>${mem.id}</td>
 	<tr><th>이름</th><td>${mem.name}</td></tr>
 	<tr><th>성별</th><td>${mem.gender==1?"남":"여"}</td></tr>
