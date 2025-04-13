@@ -19,9 +19,7 @@ return input_check(this) : input_check()함수 호출 , 매개변수this : form�
 		<tr>
 		<td rowspan="4" valign="bottom">
 		<img src="" width="100" height="120"  id="pic"><br>
-		<%--
-			href = "javascript:win_upload()" : 자바스크립트의 win_upload()호출
-		 --%>
+
 		<font size="1"><a href="javascript:win_upload()">사진등록</a></font>
 		</td><th>아이디</th>
 		<td><input type="text" name="id">
