@@ -58,8 +58,7 @@ function input_check(f){
 		[a-zA-Z]{2,} : 대소문자 2개이상
 		*/
 	}
-	
-	
+
 	function isValidTel(tel){
 		const regex = /^(02|01[0126789])-?\d{3,4}-?\d{4}$/;
 		return regex.test(tel);
