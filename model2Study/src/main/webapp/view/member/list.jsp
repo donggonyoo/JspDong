@@ -28,6 +28,7 @@
 				<tr>
 					<td><a href="info?id=${mem.id}">${mem.id}</a></td>
 					<td><img src="${pageContext.request.contextPath}/picture/${mem.picture}" width="30" height="30"></td>
+					<%--../picture/${mem.picture}  로 해도됨 ( url을 잘보자) --%>
 					<%--C:/java/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/model2Study/picture/ --%>
 					<td>${mem.name}</td>
 					<td>${mem.gender==1?"남":"여"}</td>
