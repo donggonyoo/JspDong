@@ -13,7 +13,7 @@
 	<h2>회원목록</h2>
 	<form action="mailForm" name="f" method="post"
 		onsubmit="return input_check(this)">
-		<table>
+		<table class="table">
 			<tr>
 				<th>아이디</th>
 				<th>사진</th>
@@ -28,6 +28,7 @@
 				<tr>
 					<td><a href="info?id=${mem.id}">${mem.id}</a></td>
 					<td><img src="${pageContext.request.contextPath}/picture/${mem.picture}" width="30" height="30"></td>
+					<%--C:/java/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/model2Study/picture/ --%>
 					<td>${mem.name}</td>
 					<td>${mem.gender==1?"남":"여"}</td>
 					<td>${mem.tel}</td>
@@ -35,12 +36,13 @@
 							test="${mem.id == 'admin'}">
 							<a href="deleteForm?id=${mem.id}">강제탈퇴</a>
 						</c:if></td>
-					<td><input type="checkbox" name="idchk" class="idchk" onchange="${mem.id}"></td>
+					<td><input type="checkbox" name="idchk" class="idchk"  value="${mem.id}"
+									onchange="${mem.id}"></td>
 				</tr>
 			</c:forEach>
 			<tr>
-				<td colspan="7" id="center">
-					<button type="submit" class="btn btn-dark">메일보내기</button>
+				<td colspan="7" id="center"align="right">
+					<button type="submit" class="btn btn-outline-dark">메일보내기</button>
 				</td>
 			</tr>
 		</table>

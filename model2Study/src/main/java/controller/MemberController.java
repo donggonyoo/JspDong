@@ -1,13 +1,32 @@
 package controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import gdu.mskim.MSLogin;
 import gdu.mskim.MskimRequestMapping;
@@ -29,6 +48,7 @@ public class MemberController extends MskimRequestMapping {
 	 * 3.가입성공 : 성공메시지 출력 후 loginForm 이동 
 	 * 가입실패 : 실패메시지출력 후 joinForm 이동
 	 */
+
 
 
 	@RequestMapping("join") // http://localhost:8080/model2Study/member/join 시 호출
@@ -61,7 +81,7 @@ public class MemberController extends MskimRequestMapping {
 	 * 			view로 설정되도록 구현
 	 */
 	//==    =       = 	=    =       = 	=    =       = 	=    =       = 	=    =       = 	=    =       = 	=    =       =
-	
+
 	@RequestMapping("loginForm") 
 	public String loginForm(HttpServletRequest request, HttpServletResponse response ) {
 		String login = (String)request.getSession().getAttribute("login");
@@ -74,8 +94,8 @@ public class MemberController extends MskimRequestMapping {
 			return "member/loginForm";
 		}
 	}
-		
-	
+
+
 	@RequestMapping("login")
 	public String login(HttpServletRequest request, HttpServletResponse response ) {
 		HttpSession session = request.getSession(); 
@@ -283,7 +303,7 @@ public class MemberController extends MskimRequestMapping {
 					url = "main";
 				}
 			}
-			
+
 			else {
 				msg = "탈퇴실패";
 			}
@@ -292,7 +312,7 @@ public class MemberController extends MskimRequestMapping {
 		request.setAttribute("url",url);
 		return "alert";
 	}
-	
+
 
 	@RequestMapping("list")
 	@MSLogin("loginAdminCheck")
@@ -302,8 +322,115 @@ public class MemberController extends MskimRequestMapping {
 		request.setAttribute("list", list); //list속성에저장
 		return "member/list"; // forward방식으로 member/list 로 리턴(이동)
 	}
-	
-	
+
+	@RequestMapping("mailForm")
+	@MSLogin("loginAdminCheck") //관리자만가능
+	public String  mailForm(HttpServletRequest request, HttpServletResponse response) {
+		//관리자로 로그인시에만 실행
+		String[] ids = request.getParameterValues("idchk");//해당파라미터의 값들을 배열로리턴
+		System.out.println(Arrays.toString(ids));
+		List<Member> list = dto.emailList(ids); 
+		System.out.println(list);
+		request.setAttribute("list", list); 
+		return "member/mailForm"; 
+	}
+	/*
+	 * 구글 smtp서버 이용해 메일전송하기
+	 * 1.구글계정에 접속해 2단계 로그인설정하기
+	 * 2.앱비밀번호 생성 
+	 * 3.생성된 앱 비번을 메모장을 이용해저장하기
+	 * 4. mail.properties 파일 /web-inf/에 만들기
+	 */
+
+	@RequestMapping("mailSend")
+	@MSLogin("loginAdminCheck") //관리자만가능
+	public String  mailSend(HttpServletRequest request, HttpServletResponse response) {
+		String sender = request.getParameter("googleid") + "@gmail.com";
+		//앱비밀번호
+		String passwd = request.getParameter("googlepw");
+		String recipient = request.getParameter("recipient"); //이름,이메일,이름,이메일 느낌으로넘어올거임
+		String title = request.getParameter("title");
+		String mtype = request.getParameter("mtype");
+		String result="메일전송실패";
+		String content = request.getParameter("content");
+		Properties prop = new Properties();//이메일전송위한 환경설정값
+		try {
+			String path = request.getServletContext().getRealPath("/")
+					+"WEB-INF/mail.properties"; //해당파일사용
+			FileInputStream fis = new FileInputStream(path);
+			prop.load(fis);//fis가 참조하는 파일의내용을 Properties객체의요소로저장
+			prop.put("mail.smtp.user", sender);//전송이메일주소
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		//메일전송을 위한 인증객체 
+		MyAuthenticator auth = new MyAuthenticator(sender, passwd);
+		//prop : 메일전송을위한 시스템환경설정 (mail.properties)
+		//auth : 인증객체
+		Session mailSession = Session.getInstance(prop,auth);
+
+		//msg : 메일로전송되는 데이터객체
+		MimeMessage msg = new MimeMessage(mailSession);
+		ArrayList<InternetAddress> addrs = new ArrayList<InternetAddress>();
+		try {
+			String[] emails = recipient.split(",");
+			for (String email : emails) {
+				try {
+					//email.getBytes("UTF-8") : byte배열
+					//8859_1 : 웹의 기본인코딩방식
+					addrs.add(new InternetAddress(
+							new String(email.getBytes("UTF-8"),"8859_1")));
+				}
+				catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
+			InternetAddress[] address =  new InternetAddress[emails.length];
+			for (int i = 0; i < addrs.size(); i++) {
+				address[i] = addrs.get(i);
+			}
+			InternetAddress from = new InternetAddress(sender);
+			msg.setFrom(from); //보내는사람의 이메일주소
+			msg.setRecipients(Message.RecipientType.TO, address);//수신자
+			msg.setSubject(title);
+			msg.setSentDate(new Date());
+			msg.setText(content);
+			//multipart : 내용,첨부파일1,.....
+			MimeMultipart multipart = new MimeMultipart();
+			MimeBodyPart body = new MimeBodyPart();
+			body.setContent(content,mtype); //내용
+			multipart.addBodyPart(body);
+			msg.setContent(multipart);
+			Transport.send(msg); //메일전송
+			result = "메일전송완료";
+		}
+		catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		request.setAttribute("msg", result);
+		request.setAttribute("url", "list");
+		return "alert"; 
+	}
+
+	//-------------------------------------------
+	//사용자 이름과 비밀번호를 저장하고, Session 객체가 이를 활용하여 
+	//안전하게 이메일 서버에 연결할 수 있도록 합니다
+	public final class MyAuthenticator extends Authenticator{
+		private String id;
+		private String pw;
+		public MyAuthenticator(String id, String pw) {
+			this.id = id;
+			this.pw = pw;
+		}
+		protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+			return new javax.mail.PasswordAuthentication(id, pw);
+		}
+	}
+
+
+
 	public String loginAdminCheck(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String login  = (String)session.getAttribute("login");
@@ -319,7 +446,7 @@ public class MemberController extends MskimRequestMapping {
 		}
 		return null; //정상인경우
 	}
-	
+
 	@RequestMapping("id")
 	public String id(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		String name = request.getParameter("name");
@@ -334,12 +461,12 @@ public class MemberController extends MskimRequestMapping {
 			return "idSearch";
 		}
 		else {
-		request.setAttribute("msg", name+"님의 id : "+id);
-		request.setAttribute("id", id);
-		return "idSearch";
+			request.setAttribute("msg", name+"님의 id : "+id.substring(0,id.length()-2)+"**");
+			request.setAttribute("id", id);
+			return "idSearch";
 		}
 	}
-	
+
 	@RequestMapping("pw")
 	public String pw(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
@@ -354,11 +481,83 @@ public class MemberController extends MskimRequestMapping {
 			return "pwSearch";
 		}
 		else {
-		request.setAttribute("msg", id+"님의 password : "+pass);
-		request.setAttribute("pass", pass);
-		return "pwSearch";
+			request.setAttribute("msg", id+"님의 password : "+pass.substring(0,pass.length()-2)+"**");
+			request.setAttribute("pass", pass);
+			return "pwSearch";
 		}
 	}
+
 	
+	@RequestMapping("passwordForm")
+	@MSLogin("passwordLoginCheck")
+	public String passwordForm(HttpServletRequest request, HttpServletResponse response) {
+		return "meber/loginForm";
+	}
+	
+	@RequestMapping("password")//비밀번호변경부분
+	@MSLogin("passwordLoginCheck")
+	public String password(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String login = (String)request.getSession().getAttribute("login");
+		String pass = request.getParameter("pass");
+		String chgpass = request.getParameter("chgpass");
+		Member mem = dto.selectOne(login);
+		String dbPass = mem.getPass();
+		
+		
+		if(pass.equals(mem.getPass())) {
+			if(dto.updatePass(login, chgpass)) {
+				request.setAttribute("msg", "성공(새로운비번으로 로그인_");
+				request.setAttribute("url", "logout");
+				return "openerAlert";
+			}
+			else { // 비밀번호는 맞지만 DB내에서문제 생길 시 
+				StringBuilder sb =new StringBuilder();
+				sb.append("alert('비밀번호수정시오류가발생했습니다.')");
+				request.setAttribute("script", sb.toString());
+				return "dumy";
+			}
+		}else { //비밀번호를 틀렸을 시
+			request.setAttribute("msg", "비밀번호가틀려요");
+			request.setAttribute("url", "passwordForm");
+			return "alert";
+		}
+		
+		
+	}
+
+
+	public String passwordLoginCheck(HttpServletRequest request, HttpServletResponse response) {
+		String login = (String)request.getSession().getAttribute("login");
+		if(login == null || login.trim().equals("")){
+			request.setAttribute("msg", "로그인하세요");
+			request.setAttribute("url", "loginForm");
+			return "alert";
+		}
+		return null;
+
+	}
+	
+	@RequestMapping("picture")
+	public String picture(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String path = request.getServletContext().getRealPath("")+"/picture/";
+		//C:\java\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\model2Study\picture
+		String fname = null;
+		File f = new File(path);//업로드되는 폴더정보
+		if(!f.exists()){
+			f.mkdirs(); //없으면 폴더생성
+		}
+		//request : 이미지데이터저장
+		//path : 업로드되는 폴더정보
+		//10*1024*1024 : 최대업로드크기(10M)
+		//new DefaultFileRenamePolicy() : 중복파일명존재시 이름변경해
+
+		MultipartRequest multi = new MultipartRequest(
+					request,path,10*1024*1024,"UTF-8",new DefaultFileRenamePolicy());
+		fname = multi.getFilesystemName("picture");
+		request.setAttribute("fname", fname);
+		return "pic";
+	}
+
 
 }

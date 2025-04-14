@@ -221,4 +221,42 @@ public class MemberDto {
 		}
 		return false;
 	}
+
+	public List<Member> emailList(String[] ids) {
+		//ids : 선택한 아이디목록 "[test1 test2]"
+		Connection conn = DBConnection.getConnection();
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		ArrayList<Member> list = new ArrayList<Member>();
+		StringBuilder sb = new StringBuilder();
+		//sb = 'test1','test2'
+		for (int i = 0; i < ids.length; i++) {
+			sb.append("'"+ids[i]+((i<ids.length -1)?"',":"'"));//마지막인덱스라면 , 를안찍음(sql에넣기위함)
+		}
+		String sql = "select * from member where id in("+ sb.toString()+")";
+							//sb를 String으로변경 id in('id1' , 'id2'..)
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				Member m = new Member();
+				m.setId(rs.getString("id"));
+				m.setName(rs.getString("name"));
+				m.setPass(rs.getString("pass"));
+				m.setGender(rs.getInt("gender"));
+				m.setEmail(rs.getString("email"));
+				m.setTel(rs.getString("tel"));
+				m.setPicture(rs.getString("picture"));
+				list.add(m);
+			}
+			return list;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBConnection.close(conn, psmt, rs);
+		}
+		return null;
+	}
 }
