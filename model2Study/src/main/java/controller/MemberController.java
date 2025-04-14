@@ -430,7 +430,7 @@ public class MemberController extends MskimRequestMapping {
 	}
 
 
-
+//--------로그인상태를 체크하고 , login정보가 admin인 경우에만 접근하게 하는 함수-------------
 	public String loginAdminCheck(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String login  = (String)session.getAttribute("login");
@@ -447,6 +447,8 @@ public class MemberController extends MskimRequestMapping {
 		return null; //정상인경우
 	}
 
+	
+	
 	@RequestMapping("id") //아이디찾기
 	public String id(HttpServletRequest request, HttpServletResponse response)
 									throws UnsupportedEncodingException {
@@ -462,6 +464,7 @@ public class MemberController extends MskimRequestMapping {
 			return "idSearch";
 		}
 		else {
+			//아이디뒤에 2자리는 필터처리해 alert창 띄우자!
 			request.setAttribute("msg", name+"님의 id : "+id.substring(0,id.length()-2)+"**");
 			request.setAttribute("id", id);
 			return "idSearch";
@@ -492,6 +495,7 @@ public class MemberController extends MskimRequestMapping {
 	@RequestMapping("passwordForm")
 	@MSLogin("passwordLoginCheck")
 	public String passwordForm(HttpServletRequest request, HttpServletResponse response) {
+		//login되었다면 접근가능
 		return "member/passwordForm";
 	}
 	
@@ -530,17 +534,19 @@ public class MemberController extends MskimRequestMapping {
 	public String passwordLoginCheck(HttpServletRequest request, HttpServletResponse response) {
 		String login = (String)request.getSession().getAttribute("login");
 		if(login == null || login.trim().equals("")){
+			//비밀번호변경을위해선 login이 필수임
 			request.setAttribute("msg", "로그인하세요");
 			request.setAttribute("url", "loginForm");
 			return "alert";
 		}
 		return null;
-
 	}
+	
 	
 	@RequestMapping("picture")
 	public String picture(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String path = request.getServletContext().getRealPath("")+"/picture/";
+		//기준 디렉토리 의 실제 경로
 		//C:\java\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\model2Study\picture
 		String fname = null;
 		File f = new File(path);//업로드되는 폴더정보
@@ -554,7 +560,7 @@ public class MemberController extends MskimRequestMapping {
 
 		MultipartRequest multi = new MultipartRequest(
 					request,path,10*1024*1024,"UTF-8",new DefaultFileRenamePolicy());
-		fname = multi.getFilesystemName("picture");
+		fname = multi.getFilesystemName("picture");//사진명
 		request.setAttribute("fname", fname);
 		return "pic";
 	}
