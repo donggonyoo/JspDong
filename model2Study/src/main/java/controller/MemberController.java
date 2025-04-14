@@ -388,6 +388,7 @@ public class MemberController extends MskimRequestMapping {
 			}
 			InternetAddress[] address =  new InternetAddress[emails.length];
 			for (int i = 0; i < addrs.size(); i++) {
+	//밑에 setRecipients에 넣기위해 배열로바꾸는것( 리스트를 인자로받을수없음)
 				address[i] = addrs.get(i);
 			}
 			InternetAddress from = new InternetAddress(sender);
