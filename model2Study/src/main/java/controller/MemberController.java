@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -327,10 +326,8 @@ public class MemberController extends MskimRequestMapping {
 	@MSLogin("loginAdminCheck") //관리자만가능
 	public String  mailForm(HttpServletRequest request, HttpServletResponse response) {
 		//관리자로 로그인시에만 실행
-		String[] ids = request.getParameterValues("idchk");//해당파라미터의 값들을 배열로리턴
-		System.out.println(Arrays.toString(ids));
-		List<Member> list = dto.emailList(ids); 
-		System.out.println(list);
+		String[] ids = request.getParameterValues("idchk");//해당파라미터의 값들을 배열로리턴		
+		List<Member> list = dto.emailList(ids);  //파라미터의값(mem.id들을 이용해 Member객체를 요소로갖는 리스트반환)
 		request.setAttribute("list", list); 
 		return "member/mailForm"; 
 	}
@@ -345,7 +342,7 @@ public class MemberController extends MskimRequestMapping {
 	@RequestMapping("mailSend")
 	@MSLogin("loginAdminCheck") //관리자만가능
 	public String  mailSend(HttpServletRequest request, HttpServletResponse response) {
-		String sender = request.getParameter("googleid") + "@gmail.com";
+		String sender = request.getParameter("googleid") + "@gmail.com"; //작성자의아이디에 @gmail.com을붙임
 		//앱비밀번호
 		String passwd = request.getParameter("googlepw");
 		String recipient = request.getParameter("recipient"); //이름,이메일,이름,이메일 느낌으로넘어올거임
@@ -355,17 +352,17 @@ public class MemberController extends MskimRequestMapping {
 		String content = request.getParameter("content");
 		Properties prop = new Properties();//이메일전송위한 환경설정값
 		try {
-			String path = request.getServletContext().getRealPath("/")
+			String path = request.getServletContext().getRealPath("/") //내프로젝트의절대경로
 					+"WEB-INF/mail.properties"; //해당파일사용
-			FileInputStream fis = new FileInputStream(path);
+			FileInputStream fis = new FileInputStream(path); //파일을읽어
 			prop.load(fis);//fis가 참조하는 파일의내용을 Properties객체의요소로저장
-			prop.put("mail.smtp.user", sender);//전송이메일주소
+			prop.put("mail.smtp.user", sender);//전송하는 사람의 이메일주소
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 
 		}
-		//메일전송을 위한 인증객체 
+		//메일전송을 위한 사용자인증(연결)객체 
 		MyAuthenticator auth = new MyAuthenticator(sender, passwd);
 		//prop : 메일전송을위한 시스템환경설정 (mail.properties)
 		//auth : 인증객체
@@ -373,14 +370,16 @@ public class MemberController extends MskimRequestMapping {
 
 		//msg : 메일로전송되는 데이터객체
 		MimeMessage msg = new MimeMessage(mailSession);
+		//이메일주소들을 담을수있는 리스트
 		ArrayList<InternetAddress> addrs = new ArrayList<InternetAddress>();
 		try {
+			//recipient는 name,email,name2,email2 형식의 String임.
 			String[] emails = recipient.split(",");
-			for (String email : emails) {
+			for (String email : emails) { //email : 이름 or email 
 				try {
 					//email.getBytes("UTF-8") : byte배열
 					//8859_1 : 웹의 기본인코딩방식
-					addrs.add(new InternetAddress(
+					addrs.add(new InternetAddress( //addrs에는 이메일형식만 들어갈거야(이름은들어가지않음)
 							new String(email.getBytes("UTF-8"),"8859_1")));
 				}
 				catch (UnsupportedEncodingException e) {
@@ -447,8 +446,9 @@ public class MemberController extends MskimRequestMapping {
 		return null; //정상인경우
 	}
 
-	@RequestMapping("id")
-	public String id(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	@RequestMapping("id") //아이디찾기
+	public String id(HttpServletRequest request, HttpServletResponse response)
+									throws UnsupportedEncodingException {
 		String name = request.getParameter("name");
 		//name="name"인 파라미터를 가져와
 		//charEncodingFilter를 만들어놨으므로 인코딩이필요없음
@@ -467,7 +467,7 @@ public class MemberController extends MskimRequestMapping {
 		}
 	}
 
-	@RequestMapping("pw")
+	@RequestMapping("pw") // 비번찾기
 	public String pw(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		//name="name"인 파라미터를 가져와
@@ -491,20 +491,19 @@ public class MemberController extends MskimRequestMapping {
 	@RequestMapping("passwordForm")
 	@MSLogin("passwordLoginCheck")
 	public String passwordForm(HttpServletRequest request, HttpServletResponse response) {
-		return "meber/loginForm";
+		return "member/passwordForm";
 	}
 	
 	@RequestMapping("password")//비밀번호변경부분
 	@MSLogin("passwordLoginCheck")
 	public String password(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
 		String login = (String)request.getSession().getAttribute("login");
-		String pass = request.getParameter("pass");
-		String chgpass = request.getParameter("chgpass");
-		Member mem = dto.selectOne(login);
-		String dbPass = mem.getPass();
+		String pass = request.getParameter("pass");//입력비번
+		String chgpass = request.getParameter("chgpass");//변경비번
+		Member mem = dto.selectOne(login); 
+		//select * from member where id='login값'
 		
-		
+		//입력한비밀번호와 DB상의비번이 같다면
 		if(pass.equals(mem.getPass())) {
 			if(dto.updatePass(login, chgpass)) {
 				request.setAttribute("msg", "성공(새로운비번으로 로그인_");

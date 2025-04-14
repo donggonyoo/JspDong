@@ -229,10 +229,10 @@ public class MemberDto {
 		ResultSet rs = null;
 		ArrayList<Member> list = new ArrayList<Member>();
 		StringBuilder sb = new StringBuilder();
-		//sb = 'test1','test2'
+		
 		for (int i = 0; i < ids.length; i++) {
 			sb.append("'"+ids[i]+((i<ids.length -1)?"',":"'"));//마지막인덱스라면 , 를안찍음(sql에넣기위함)
-		}
+		}//sb = 'test1','test2'....
 		String sql = "select * from member where id in("+ sb.toString()+")";
 							//sb를 String으로변경 id in('id1' , 'id2'..)
 		try {

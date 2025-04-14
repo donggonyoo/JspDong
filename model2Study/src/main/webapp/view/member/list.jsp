@@ -26,6 +26,7 @@
 			</tr>
 			<c:forEach var="mem" items="${list}"> <%--멤버객체가있는 list --%> 
 				<tr>
+				<!-- mem.xx :  getxx프로퍼티 -->
 					<td><a href="info?id=${mem.id}">${mem.id}</a></td>
 					<td><img src="${pageContext.request.contextPath}/picture/${mem.picture}" width="30" height="30"></td>
 					<%--../picture/${mem.picture}  로 해도됨 ( url을 잘보자) --%>

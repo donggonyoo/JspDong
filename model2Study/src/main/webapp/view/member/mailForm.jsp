@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>메일작성</title>
 <script type="text/javascript">
 function inputchk(f) {
 	if(f.googleid.value==""){
@@ -21,6 +20,8 @@ function inputchk(f) {
 	return true;
 }
 </script>
+
+<title>메일작성</title>
 </head>
 <body>
 <div class="container"></div>
@@ -34,7 +35,7 @@ function inputchk(f) {
 <tr><td>받는사람</td>
 	<td><input type="text" name="recipient" class="form-control" 
 value="<c:forEach items="${list}" var="m">${m.name} &lt;${m.email}&gt;</c:forEach>">
-<%-- name <email> 의 형태 --%>
+<%-- name <email> 의 형태로 check된member가 나열될거임 --%>
 	</td></tr>
 <tr><td>제목</td>
 	<td><input type="text" name=title class="form-control"></td>
@@ -47,7 +48,7 @@ value="<c:forEach items="${list}" var="m">${m.name} &lt;${m.email}&gt;</c:forEac
 	</select></td>
 </tr>
 <tr><td colspan="2">
-<textarea name="content" rows="10" cols="40" class="form-control"></textarea></td></tr>
+내용:<textarea name="content" rows="10" cols="40" class="form-control"></textarea></td></tr>
 <tr><td colspan="2" id="center">
 	<button type="submit" class="btn btn-primary">전송</button></td></tr>
 </table>
