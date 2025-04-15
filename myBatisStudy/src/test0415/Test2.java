@@ -21,7 +21,7 @@ import mapper.MybatisSet;
 */
 public class Test2 {
 	public static void main(String[] args) {
-		//한 번만 초기화되는 전역 SqlSessionFactory를 만들기 위한 구조
+	
 		SqlSessionFactory sqlMap = MybatisSet.getSessionFactory();
 		
 		SqlSession session = sqlMap.openSession();
@@ -54,13 +54,6 @@ public class Test2 {
 		 for (Professor p : pfList) {
 			 System.out.println(p);	
 		}
-		
-		 
-		 
-		 
-		 
-		 
-		
 	}
 	
 }
