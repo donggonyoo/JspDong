@@ -46,15 +46,7 @@ return input_check(this) : input_check()함수 호출 , 매개변수this : form�
 	</table>
 </form>
 <script>
-function idchk() {
-    var idValue = document.getElementById("id").value;  
-    if (idValue) {
-    	let op = "width=500,height=500 ,top=50 ,left=150";
-    	open("idcheck","",op);
-    } else {
-        alert("아이디를 입력해 주세요.");
-    }
- }
+
     
 function input_check(f){
 	//f : <form...>

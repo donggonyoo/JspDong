@@ -22,8 +22,9 @@ public class Main2_student {
 		//
 		sqlMap = new SqlSessionFactoryBuilder().build(input);
 	}
-	
 	public static void main(String[] args) {
+//		SqlSessionFactory sqlmap = MybatisSet.getSessionFactory(); 위에 static변수의 내용을 가진 메서드
+		
 		//Connection객체를 이용해 mybatis와 DB를 연결
 		SqlSession session = sqlMap.openSession();
 		System.out.println("학생테이블에 레코드추가하기");
@@ -41,10 +42,11 @@ public class Main2_student {
 		System.out.println("student레코드 추가 : "+cnt);
 		
 		Student stResult = session.selectOne("student.selectNo",st.getStudno());
+		//1002 을넣어도 상관X
+		
 		System.out.println("추가한 레코드 조회 ===: ");
 		System.out.println(stResult);
-		//1002번의 학생의 학년을 2학년, 몸무게:80 , 키:170 지도교수:1001 으로수정
-		
+		//1002번의 학생의 학년을 2학년, 몸무게:80 , 키:170 지도교수:1001 으로수정		
 		st.setGrade(2);
 		st.setWeight(80);
 		st.setHeight(170);

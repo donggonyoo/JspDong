@@ -37,7 +37,7 @@
 	</div>
 	<script type="text/javascript">
 if(${able}){
-	document.querySelector("#msg").className="able";
+	document.querySelector("#msg").className="able"; //글자색변경을위해
 	opener.document.f.chk.className = "btn btn-success";
 
 }
