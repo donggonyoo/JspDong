@@ -28,7 +28,7 @@
 				<tr>
 				<!-- mem.xx :  getxx프로퍼티 -->
 					<td><a href="info?id=${mem.id}">${mem.id}</a></td>
-					<td><img src="${pageContext.request.contextPath}/picture/${mem.picture}" width="30" height="30"></td>
+					<td><img src="${pageContext.request.contextPath}/picture/${mem.picture}" width="50" height="50"></td>
 					<%--../picture/${mem.picture}  로 해도됨 ( url을 잘보자) --%>
 					<%--C:/java/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/model2Study/picture/ --%>
 					<td>${mem.name}</td>

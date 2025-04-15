@@ -5,8 +5,47 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-<script type="text/javascript">
+</head>
+<body>
+<!--  onsubmit :  나의 form 내부에 submit버튼 클릭되면 
+			form 태그에 이벤트 발생(target == form)
+return input_check(this) : input_check()함수 호출 , 매개변수this : form객체를 의미					
+				-->
+<form action="join" name="f" method="post" onsubmit="return input_check(this)">
+	<input type="hidden" name="picture" value=""><!-- 업로드된 이미지의 이름이 들어갈태그 -->
+	<table class="table">
+		<tr>
+		<td rowspan="4" valign="bottom">
+		<img src="" width="100" height="120"  id="pic"><br>
+
+		<font size="1"><a href="javascript:win_upload()">사진등록</a></font>
+		</td><th>아이디</th>
+		<td><input type="text" name="id"  class="form-control">
+		<button type="button" onclick="idchk()" class="btn btn-dark" id="chk" name="chk">중복검색</button>
+		</td></tr>
+		<tr><th>비밀번호</th><td><input type="password" name="pass"></td></tr>
+		<tr><th>이름</th><td><input type="text" name="name"></td></tr>
+		<tr><th>성별</th>
+		<td>
+		<label for="gender1" class="form-check-label">
+		남<input type="radio" name="gender" id="gender1" value="1">
+		</label>
+		
+		<label for="gender2" class="form-check-label">
+		여<input type="radio" name="gender" id="gender2" value="2" >
+		</label>
+		
+		</td></tr>
+		<tr><th>전화번호</th><td colspan="2"><input type="text" name="tel" class="form-control"></td></tr>
+		<tr><th>이메일</th><td colspan="2"><input type="text" name="email" class="form-control"></td></tr>
+		<!-- button태그의 기본type : submit임 -->
+		<tr><td colspan="3"><button class="btn btn-outline-dark">회원가입</button ></td></tr>
+	</table>
+</form>
+<script>
 function idchk() {
     var idValue = document.getElementById("id").value;  
     if (idValue) {
@@ -16,44 +55,6 @@ function idchk() {
         alert("아이디를 입력해 주세요.");
     }
  }
-</script>
-</head>
-<body>
-<!--  onsubmit :  나의 form 내부에 submit버튼 클릭되면 
-			form 태그에 이벤트 발생(target == form)
-return input_check(this) : input_check()함수 호출 , 매개변수this : form객체를 의미					
-				-->
-<form action="join" name="f" method="post" onsubmit="return input_check(this)">
-	<input type="hidden" name="picture" value=""><!-- 업로드된 이미지의 이름이 들어갈태그 -->
-	<table>
-	<caption>회원가입</caption>
-		<tr>
-		<td rowspan="4" valign="bottom">
-		<img src="" width="100" height="120"  id="pic"><br>
-
-		<font size="1"><a href="javascript:win_upload()">사진등록</a></font>
-		</td><th>아이디</th>
-		<td><input type="text" name="id" id="id">
-		<button type="button" onclick="idchk()">중복검색</button>
-		</td></tr>
-		<tr><th>비밀번호</th><td><input type="password" name="pass"></td></tr>
-		<tr><th>이름</th><td><input type="text" name="name"></td></tr>
-		<tr><th>성별</th>
-		<td>
-		<label for="gender1">남</label>
-		<input type="radio" name="gender" id="gender1" value="1">
-		<label for="gender2">여</label>
-		<input type="radio" name="gender" id="gender2" value="2">
-		</td></tr>
-		<tr><th>전화번호</th><td colspan="2"><input type="text" name="tel"></td></tr>
-		<tr><th>이메일</th><td colspan="2"><input type="text" name="email"></td></tr>
-		<!-- button태그의 기본type : submit임 -->
-		<tr><td colspan="3"><button>회원가입</button></td></tr>
-	</table>
-</form>
-<script>
-
-
     
 function input_check(f){
 	//f : <form...>
@@ -83,6 +84,14 @@ function win_upload(){
 }
 
 function idchk(){
+if(document.f.id.value==''){
+	alert("아이디를 입력하세요");
+	document.f.id.focus();
+	}
+else{
+	let op="width=500,height=200,left=50,right=150";
+	open("idchk?id="+document.f.id.value,"",op);
+}
 	
 }
 

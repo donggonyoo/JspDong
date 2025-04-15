@@ -562,8 +562,32 @@ public class MemberController extends MskimRequestMapping {
 					request,path,10*1024*1024,"UTF-8",new DefaultFileRenamePolicy());
 		fname = multi.getFilesystemName("picture");//사진명
 		request.setAttribute("fname", fname);
-		return "pic";
+		return "picture";
 	}
-
-
+	
+	/*
+	 * 1 id:파라미터
+	 * 2.id이용해 DB 조회
+	 * 3. DB에서 조회 안될 시 : 사용가능한아이디 (초록화면)
+	 * 4. 사용중인 아이디입니다(빨간색화면)
+	 * 
+	 */
+	@RequestMapping("idchk")
+	public String idchk(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		Member m = dto.selectOne(id);
+		String msg;
+		boolean able = true;;
+		if(m == null) {
+			msg="사용가능한아이디";
+			able = true;
+		}
+		else {
+			msg="사용 중인 아이디";
+			able = false;
+		}
+		request.setAttribute("msg",msg);
+		request.setAttribute("able",able);
+		return "member/idchk";	
+	}
 }
