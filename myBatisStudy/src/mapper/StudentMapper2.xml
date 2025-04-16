@@ -63,8 +63,7 @@ prefixOverrides="AND || OR"
 		select * from student
 	<if test="datas!=null">
 		where ${column} in
-		<foreach collection="datas" item="d" separator="," 
-		open="("  close= ")">#{d}</foreach>
+		<foreach collection="datas" item="d" separator="," open="("  close= ")">#{d}</foreach>
 		<!-- (data[0],...,...) -->
 	</if>
 </select>
