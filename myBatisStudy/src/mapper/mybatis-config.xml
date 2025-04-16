@@ -30,7 +30,10 @@
   <mappers>
   	<mapper resource="mapper/MemberMapper1.xml"/>
   	<mapper resource="mapper/StudentMapper1.xml"/>
+  	<mapper resource="mapper/StudentMapper2.xml"/>
   	<mapper resource="mapper/professorMapper1.xml"/>
+  	<package name="mapper"/>
+  	<!-- mapper패키지의 인터페이스를 sql구문으로등록 -->
   </mappers>
 
 </configuration>

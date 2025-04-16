@@ -1,32 +1,24 @@
 package model.member;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import model.DBConnection;
+import org.apache.ibatis.session.SqlSession;
+
+import model.MyBatisConnection;
+import model.mapper.MemberMapper;
 
 public class MemberDto {
-
+	private final static Class<MemberMapper> cls = MemberMapper.class;
+	private static Map<String,Object>map = new HashMap<>();
 	public boolean insert(Member mem) {
-		Connection conn= DBConnection.getConnection(); //DB와 연결하기위한 객체
-		PreparedStatement pstmt = null;//SQL을 DB에전달하기위한 객체
-		String sql = "insert into member(id,pass,name,gender,tel,email,picture)"
-		+" values(?,?,?,?,?,?,?)"; //모든속성값을 넣는것이기때문에 굳이 속성명을 입력하지않아도됨
+		
+		SqlSession conn = MyBatisConnection.getConnection(); //DB와 연결하기위한 객체
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			//pstmt.setString(1,A): sql의 첫번쨰 ?를 String형태의 A으로 설정
-			pstmt.setString(1, mem.getId());//첫번쨰값을 Member의 id로한다.
-			pstmt.setString(2, mem.getPass());
-			pstmt.setString(3, mem.getName());
-			pstmt.setInt(4, mem.getGender());//gender의 자료형int
-			pstmt.setString(5, mem.getTel());
-			pstmt.setString(6, mem.getEmail());
-			pstmt.setString(7, mem.getPicture());
-			if(pstmt.executeUpdate()>0) { 
+			if(conn.getMapper(cls).insert(mem)>0) {
 				return true;
 			}
 			else return false;
@@ -35,227 +27,149 @@ public class MemberDto {
 			e.printStackTrace();
 		}
 		finally {
-			DBConnection.close(conn,pstmt,null);
+			MyBatisConnection.close(conn);
+			//DB에 commit후 DB를 닫는 메서드(finally를 이용해서 항상 해준다)
 		}
 		return false;
 	}
 	
 	public  Member selectOne(String id) {
-
-		String sql = "select * from member where id=?";
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement psmt =null;
-		ResultSet rs = null;
+		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, id);//?를 파라미터로받은 id로 사용한다.
-			rs = psmt.executeQuery();//select문 실행
-		while(rs.next()) {//id에 해당하는 레코드가있는지 검사
-			Member mem = new Member();
-			if(rs.getString(1).equals(id)) {
-				mem.setId(rs.getString("id")); //rs.getString("컬럼명")
-				mem.setPass(rs.getString("pass"));
-				mem.setName(rs.getString("name"));
-				mem.setGender(rs.getInt("gender"));//이거만 int형임
-				mem.setTel(rs.getString("tel"));
-				mem.setEmail(rs.getString("email"));
-				mem.setPicture(rs.getString("picture"));
-				return mem;
-				}
-			}
+			return session.getMapper(cls).selectOne(id);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		finally {
-			DBConnection.close(conn, psmt, rs);
+			MyBatisConnection.close(session);
 		}
 		return null;	//없다면 null;	
 	}
 	
+	
 	public List<Member> list() {
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		String sql = "select * from member";
-		ArrayList<Member> list = new ArrayList<Member>();
-		
+		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			while(rs.next()) {
-				Member m = new Member();
-				m.setId(rs.getString("id"));
-				m.setPass(rs.getString("pass"));
-				m.setPicture(rs.getString("picture"));
-				m.setName(rs.getString("name"));
-				m.setGender(rs.getInt("gender"));
-				m.setTel(rs.getString("tel"));
-				list.add(m);
-			}
-			return list;
-			
+			return session.getMapper(cls).selectList();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		finally {
-			DBConnection.close(conn, psmt, rs);
+			MyBatisConnection.close(session);
 		}
 		return null;
 	}
 	
+	
 		public boolean update(Member mem) {
-			Connection conn = DBConnection.getConnection();
-			PreparedStatement pstmt = null;
-			String sql = "update member set name=?,gender=?,tel=?,email=?,"
-					+ "picture=? where id=?";
+			SqlSession session = MyBatisConnection.getConnection();
 			try {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, mem.getName());
-				pstmt.setInt(2, mem.getGender());
-				pstmt.setString(3, mem.getTel());
-				pstmt.setString(4, mem.getEmail());
-				pstmt.setString(5, mem.getPicture());
-				pstmt.setString(6, mem.getId());
-				return pstmt.executeUpdate() > 0; //변경됐다면 true가반환될것임
+				if(session.getMapper(cls).update(mem)>0) {
+					return true;
+				}
+				else return false;
 			} catch(Exception e) {
 				e.printStackTrace();
 			} finally {
-				DBConnection.close(conn, pstmt, null);
+				MyBatisConnection.close(session);
 			}
 			return false;
 		}
 	
 		
 	public boolean delete(String id) {
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement psmt = null;
+		SqlSession session = MyBatisConnection.getConnection();
 		String sql = "delete from member where id=?";
 		try {
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, id);
-			if(psmt.executeUpdate()>0) {
+			if(session.getMapper(cls).delete(id)>0) {
 				return true;
 			}
-			return false;	
+			else return false;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		finally {
-			DBConnection.close(conn, psmt, null);
+			MyBatisConnection.close(session);
 		}
 		return false;
 	}
 
 
 	public String idSearch(String name , String tel) {
-		Connection con = DBConnection.getConnection();
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
+		SqlSession session = MyBatisConnection.getConnection();
 		String sql = "select id from member where name=? and tel=?";
+		map.clear();
+		map.put("name",name);
+		map.put("tel",tel);
 		try {
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, name);
-			psmt.setString(2,tel);
-			rs = psmt.executeQuery();
-			if(rs.next()) {
-				return rs.getString("id");
-			}
+			return session.getMapper(cls).idSearch(map);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		finally {
-			DBConnection.close(con, psmt, rs);
+			MyBatisConnection.close(session);
 		}
 		return null;
 	}
 
 	public String pwSearch(String id,String tel,String email) {
-		Connection con = DBConnection.getConnection();
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
+		SqlSession session = MyBatisConnection.getConnection();
 		String sql = "select pass from member where id=? and tel=? and email=?";
+		map.clear();
+		map.put("id", id);
+		map.put("tel", tel);
+		map.put("email", email);
 		try {
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, id);
-			psmt.setString(2, tel);
-			psmt.setString(3,email);
-			rs = psmt.executeQuery();
-			if(rs.next()) {
-				return rs.getString("pass");
-			}
+			return session.getMapper(cls).pwSearch(map);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		finally {
-			DBConnection.close(con, psmt, rs);
+			MyBatisConnection.close(session);
 		}
 		return null;
-		
 	}
 	
 	public boolean updatePass(String id , String pass) {
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement psmt = null;
+		SqlSession session = MyBatisConnection.getConnection();
 		String sql = "update member set pass=? where id=?";
+		map.clear();
+		map.put("id", id);
+		map.put("pass", pass);
 		try {
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, pass);
-			psmt.setString(2, id);
-			if(psmt.executeUpdate()>0) {
-				conn.commit();
+			if(session.getMapper(cls).updatePass(map)>0) {
 				return true;
 			}
-			return false;
-			
+			else return false;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 		finally {
-			DBConnection.close(conn, psmt, null);
+			MyBatisConnection.close(session);
 		}
 		return false;
 	}
 
 	public List<Member> emailList(String[] ids) {
-		//ids : 선택한 아이디목록 "[test1 test2]"
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
+		SqlSession session = MyBatisConnection.getConnection();
 		ArrayList<Member> list = new ArrayList<Member>();
 		StringBuilder sb = new StringBuilder();
-		
-		for (int i = 0; i < ids.length; i++) {
-			sb.append("'"+ids[i]+((i<ids.length -1)?"',":"'"));//마지막인덱스라면 , 를안찍음(sql에넣기위함)
-		}//sb = 'test1','test2'....
-		String sql = "select * from member where id in("+ sb.toString()+")";
-							//sb를 String으로변경 id in('id1' , 'id2'..)
+		map.clear();
+		map.put("datas", ids);
 		try {
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			while(rs.next()) {
-				Member m = new Member();
-				m.setId(rs.getString("id"));
-				m.setName(rs.getString("name"));
-				m.setPass(rs.getString("pass"));
-				m.setGender(rs.getInt("gender"));
-				m.setEmail(rs.getString("email"));
-				m.setTel(rs.getString("tel"));
-				m.setPicture(rs.getString("picture"));
-				list.add(m);
-			}
-			return list;
+			return session.getMapper(cls).emailList(map);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally {
-			DBConnection.close(conn, psmt, rs);
+			MyBatisConnection.close(session);
 		}
 		return null;
 	}

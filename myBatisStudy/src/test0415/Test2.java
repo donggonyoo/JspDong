@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 
 import main.Professor;
 import mapper.MybatisSet;
@@ -22,9 +21,7 @@ import mapper.MybatisSet;
 public class Test2 {
 	public static void main(String[] args) {
 	
-		SqlSessionFactory sqlMap = MybatisSet.getSessionFactory();
-		
-		SqlSession session = sqlMap.openSession();
+		SqlSession session = MybatisSet.getSession();
 		Professor pf = new Professor();
 		List<Professor> pfList = new ArrayList<>();
 		//1. 교수테이블에 등록된 레코드의 건수를 출력하기.

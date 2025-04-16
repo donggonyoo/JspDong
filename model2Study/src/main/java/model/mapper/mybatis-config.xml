@@ -3,13 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 <!-- config파일에서 사용되는 환경변수 설정 -->
-  <properties resource="mapper/mybatis.properties" />
+  <properties resource="model/mapper/mybatis.properties" />
   
   <!-- 별명들 -->
   <typeAliases>
-  	<typeAlias type="main.Member" alias="Member" />
-  	<typeAlias type="main.Student" alias="Student" />
-  	<typeAlias type="main.Professor" alias="Professor" />
+  	<typeAlias type="model.member.Member" alias="Member"/>
   </typeAliases>
   
   <!-- Connection 객체  -->
@@ -28,11 +26,7 @@
   
   <!--  sql 구문을 가진 파일 목록 -->
   <mappers>
-  	<mapper resource="mapper/MemberMapper1.xml"/>
-  	<mapper resource="mapper/StudentMapper1.xml"/>
-  	<mapper resource="mapper/StudentMapper2.xml"/>
-  	<mapper resource="mapper/professorMapper1.xml"/>
-  	<package name="mapper"/>
+  	<package name="model.mapper"/>
   	<!-- mapper패키지의 인터페이스를 sql구문으로등록 -->
   </mappers>
 

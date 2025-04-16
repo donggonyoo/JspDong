@@ -21,7 +21,7 @@ request.setAttribute("mem",Member객체)
 	 get property(mem.getId())를 가져오는거임) 
  --%>
 	
-<table><caption>회원정보</caption>
+<table class="table">
 <tr><td rowspan="6" width="30%">
 	<img src="${pageContext.request.contextPath}/picture/${mem.picture}" width="200" height="210"></td>
 <%--현재 웹 애플리케이션의 context path(루트경로)를 문자열로 반환 
@@ -33,10 +33,10 @@ request.setAttribute("mem",Member객체)
 	<tr><th>전화</th><td>${mem.tel}</td></tr>
 	<tr><th>이메일</th><td>${mem.email}</td></tr>
 	<tr><td colspan="2">
-	<a href="updateForm?id=${mem.id}">수정</a>
+	<a href="updateForm?id=${mem.id}"> 수정 </a>
 		
 	<c:if test="${param.id != 'admin'}">
-	<a href="deleteForm?id=${mem.id}">탈퇴</a>
+	<a href="deleteForm?id=${mem.id}"> 탈퇴 </a>
 	</c:if>
 	</tr>
 </table>
