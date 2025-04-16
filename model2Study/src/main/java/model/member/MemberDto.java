@@ -13,10 +13,9 @@ import model.mapper.MemberMapper;
 public class MemberDto {
 	private final static Class<MemberMapper> cls = MemberMapper.class;
 	private static Map<String,Object>map = new HashMap<>();
+
 	public boolean insert(Member mem) {
-		
 		SqlSession conn = MyBatisConnection.getConnection(); //DB와 연결하기위한 객체
-		
 		try {
 			if(conn.getMapper(cls).insert(mem)>0) {
 				return true;
@@ -32,7 +31,7 @@ public class MemberDto {
 		}
 		return false;
 	}
-	
+
 	public  Member selectOne(String id) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
@@ -46,8 +45,8 @@ public class MemberDto {
 		}
 		return null;	//없다면 null;	
 	}
-	
-	
+
+
 	public List<Member> list() {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
@@ -61,24 +60,24 @@ public class MemberDto {
 		}
 		return null;
 	}
-	
-	
-		public boolean update(Member mem) {
-			SqlSession session = MyBatisConnection.getConnection();
-			try {
-				if(session.getMapper(cls).update(mem)>0) {
-					return true;
-				}
-				else return false;
-			} catch(Exception e) {
-				e.printStackTrace();
-			} finally {
-				MyBatisConnection.close(session);
+
+
+	public boolean update(Member mem) {
+		SqlSession session = MyBatisConnection.getConnection();
+		try {
+			if(session.getMapper(cls).update(mem)>0) {
+				return true;
 			}
-			return false;
+			else return false;
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			MyBatisConnection.close(session);
 		}
-	
-		
+		return false;
+	}
+
+
 	public boolean delete(String id) {
 		SqlSession session = MyBatisConnection.getConnection();
 		String sql = "delete from member where id=?";
@@ -134,7 +133,7 @@ public class MemberDto {
 		}
 		return null;
 	}
-	
+
 	public boolean updatePass(String id , String pass) {
 		SqlSession session = MyBatisConnection.getConnection();
 		String sql = "update member set pass=? where id=?";
@@ -173,6 +172,6 @@ public class MemberDto {
 		}
 		return null;
 	}
-	
+
 
 }

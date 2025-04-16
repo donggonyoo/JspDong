@@ -68,7 +68,7 @@
 <body>
 	<div class="jumbotron text-center" style="margin-bottom: 0">
 		<h1>dongPage</h1>
-		<p>부당거래</p>
+		<p>남자의 페이지</p>
 	</div>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<a class="navbar-brand" href="#">목록</a>
