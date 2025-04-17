@@ -28,6 +28,7 @@ public class SiteMeshFilter  extends ConfigurableSiteMeshFilter{
 		.addExcludedPath("/member/id*")
 		.addExcludedPath("/member/pw*")
 		.addExcludedPath("/member/password*");
-		//member하위의 picture로시작하는 이름을가진파일은 제외
+		builder.addDecoratorPath("/board/*", "/layout/layout.jsp");
+		
 	}
 }
