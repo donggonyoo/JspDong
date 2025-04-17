@@ -27,6 +27,7 @@ public interface BoardMapper {
 	
 	@Select("select * from board where boardid=#{boardid}"
 			+ " order by grp desc , grpstep asc limit #{start},#{limit}")
+	//grp==num  을 내림차순으로함 (최신이 가장 위에뜨게)
 	//start번에서부터   limit개 조회해
 	List<Board> list(Map<String, Object> map);
 

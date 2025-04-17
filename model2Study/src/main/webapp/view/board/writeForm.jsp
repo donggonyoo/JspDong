@@ -59,7 +59,7 @@
 				f.title.focus();
 				return;
 			}
-			f.submit(); //submit발생 
+			f.submit(); //모두아니라면 submit발생 
 		}
 	</script>
 

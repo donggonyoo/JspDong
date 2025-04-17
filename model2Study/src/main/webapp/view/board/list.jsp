@@ -31,7 +31,7 @@
 	<c:set var="num" value="${num-1}" /> <!-- num을 -1해줌 -->
 		<td style="text-align: left">
 		
-		<c:if test="${!empty b.file1}"><a href="../upload/board/${b.file1}">@</a></c:if>
+		<c:if test="${!empty b.file1}"><a href="../upload/board/${b.file1}">(FILE)</a></c:if>
 		<c:if test="${empty b.file1}">&nbsp;&nbsp;&nbsp;</c:if>	
 		<a href="info?num=${b.num}">${b.title}</a></td>
 		<td>${b.writer}</td>

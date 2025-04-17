@@ -54,7 +54,7 @@ public class BoardController extends MskimRequestMapping {
 		if(board.getFile1()==null) {
 			board.setFile1("");
 		}
-		int num = dao.maxnum();
+		int num = dao.maxnum();//가장큰 키값을 가져옴
 		board.setNum(++num); // 게시글 키값(게시글번호)
 		board.setGrp(num); // 그룹번호
 		String msg="게시물등록실패";

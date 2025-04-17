@@ -10,8 +10,9 @@
 <body>
 <h2 class="">${boardName}</h2>
 <table class="table">
-<tr><th width="20%">글쓴이</th>
+<tr><th width="20%">글쓴이</th> <!-- Controller에서 b속성(boarder객체)를 넘겼음 -->
 <td width="80%" style="text-align:left">${b.writer}</td></tr>
+<%-- ${b.xxx} : b(board)에 getxx프로퍼티 --%>
 <tr><th>제목</th><td style="text-align:left">${b.title}</td></tr>
 <tr><th>내용</th><td><table style="width:100%; height:250px;">
 <tr><td style="border-width:0px; vertical-align:top; text-align:left; margin:0px; padding:0px;">
