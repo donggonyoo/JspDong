@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 
 <!-- /webapp/view/board/writeForm.jsp -->
+<!-- 
+	1. boardid가 1인경우 , 관리자가아니면 관리자만 공지사항 글쓰기가 가능합니다
+	공지사항 목록 페이지이동
+ -->
 <!DOCTYPE html>
 <html>
 <head>

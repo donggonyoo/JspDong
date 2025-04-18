@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<c:set var="path" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,8 +80,8 @@
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="main">회원관리</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">공지사항</a></li>
-				<li class="nav-item"><a class="nav-link" href="list">자유게시판</a></li>
+				<li class="nav-item"><a class="nav-link" href="${path}/board/list?boardid=1">공지사항</a></li>
+				<li class="nav-item"><a class="nav-link" href="${path}/board/list?boardid=2">자유게시판</a></li>
 				<c:if test="${sessionScope.login != null}">
 				<li class="nav-item"><a class="nav-link" href="#">${sessionScope.login}님 하이</a></li>
 				<li class="nav-item"><a class="nav-link" href="logout">로그아웃</a></li>

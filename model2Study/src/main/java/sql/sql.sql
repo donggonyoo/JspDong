@@ -15,9 +15,12 @@ create table board(
 	grpstep int(5) -- 그룹의 출력 순서
 );
 
-select * from board;
+select * from board ;
 
-update board set readcnt=0;
+select * from board where grp=18 order by grpstep asc;
+
+select * from book;
+
 
 
 

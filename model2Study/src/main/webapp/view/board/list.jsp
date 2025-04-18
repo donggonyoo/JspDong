@@ -21,8 +21,8 @@
 <c:if test="${boardcount > 0}">
 	<tr><td colspan="5" style="text-align:right">글 갯수:${boardcount}</td></tr>
 	<tr>
-	<th width="8%">번호</th><th width="50%">제목</th>
-	<th width="14%">작성자</th><th width="17%">등록일</th>
+	<th width="8%">번호</th><th width="45%">제목</th>
+	<th width="14%">작성자</th><th width="22%">등록일</th>
 	<th width="11%">조회수</th>
 	</tr>
 	<c:set var="num" value="${num}" /> <!-- (controller에서만듬)num속성을 c:set으로 지정 -->
@@ -32,10 +32,31 @@
 		<td style="text-align: left">
 		
 		<c:if test="${!empty b.file1}"><a href="../upload/board/${b.file1}">(FILE)</a></c:if>
-		<c:if test="${empty b.file1}">&nbsp;&nbsp;&nbsp;</c:if>	
+		<c:if test="${empty b.file1}">&nbsp;&nbsp;&nbsp;</c:if>
+		
+		<!-- 답글인 경우 grplevel만큼 공백을주자 -->
+		<c:if test="${b.grplevel>0}">
+			<c:forEach var="i" begin="1" end="${b.grplevel}">
+			&emsp;
+			</c:forEach>└
+		</c:if>	
 		<a href="info?num=${b.num}">${b.title}</a></td>
 		<td>${b.writer}</td>
-		<td>${b.regdate}</td>
+		
+		<%-- 
+			오늘등록된 게시물의 형식은 HH:mm:ss형식으로바꾸자
+		 --%>
+		 <td>
+		 <fmt:formatDate value="${b.regdate}" type="date" var="rdate"/>
+		 <fmt:formatDate value="${today}" type="date" var="tdate"/>
+		 <c:if test="${rdate==tdate}">
+		 	<fmt:formatDate value="${b.regdate}" type="time"/>
+		 </c:if>
+		 <c:if test="${rdate!=tdate}">
+		 	<fmt:formatDate value="${b.regdate}" type="both"/>
+		 </c:if>
+		</td>
+		
 		<td>${b.readcnt}</td>
 	</c:forEach>
 	<tr><td colspan="5" align="center">
@@ -55,8 +76,15 @@
 		</c:if>
 	</td></tr>
 </c:if>
+
+<!--  
+1.공지사항 게시판인경우 관리자로그인한 경우만 글쓰기출력하기 
+2. write
+-->
+<c:if test="${boardid != 1 || sessionScope.login=='admin'}">
 <tr><td colspan="5" style="text-align:right">
 	<p align="right"><a href="writeForm">[글쓰기]</a></p>
+</c:if>
 </td></tr>
 </table>
 

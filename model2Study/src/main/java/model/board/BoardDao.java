@@ -84,7 +84,7 @@ public class BoardDao {
 	}
 
 
-	public Board numSearch(String num) {
+	public Board numSearch(int num) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			return session.getMapper(cls).numSearch(num);
@@ -99,7 +99,7 @@ public class BoardDao {
 	}
 
 
-	public int UpdateCnt(int readcnt, String num) {
+	public int UpdateCnt(int readcnt, int num) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
@@ -113,6 +113,73 @@ public class BoardDao {
 			MyBatisConnection.close(session);
 		}
 		return 0;
+	}
+
+
+	public void grpStepAdd(int grp,int grpstep) {
+		SqlSession session = MyBatisConnection.getConnection();
+		try {
+			map.clear();
+			map.put("grp", grp);
+			map.put("grpstep", grpstep);
+			session.getMapper(cls).grpStepAdd(map);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			MyBatisConnection.close(session);
+		}
+		
+	}
+
+
+	public boolean update(Board b) {
+		SqlSession session = MyBatisConnection.getConnection();
+		try {
+			return session.getMapper(cls).update(b);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			MyBatisConnection.close(session);
+		}
+		return false;
+	}
+
+
+	public int grpSearch(int grp , int grplevel) {
+		SqlSession session = MyBatisConnection.getConnection();
+		map.clear();
+		map.put("grp", grp);
+		map.put("grplevel", grplevel);
+		try {
+			return session.getMapper(cls).grpSearch(map);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			MyBatisConnection.close(session);
+		}
+		return 0;
+	}
+
+
+	public boolean delete(int num) {
+		SqlSession session = MyBatisConnection.getConnection();
+		try {
+			return session.getMapper(cls).delete(num)>0;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			MyBatisConnection.close(session);
+		}
+		return false;
+		
 	}
 	
 	
