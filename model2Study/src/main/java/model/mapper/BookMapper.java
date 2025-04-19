@@ -10,11 +10,11 @@ import model.book.Book;
 
 public interface BookMapper {
 
-	@Insert("insert into book(writer,title,content)"
-			+ " values(#{writer},#{title},#{content})")
+	@Insert("insert into book(writer,title,content,dt)"
+			+ " values(#{writer},#{title},#{content},#{dt})")
 	int insert(Book book);
 
-	@Select("select * from book limit #{pageNum},#{limit}")
+	@Select("select * from book order by dt desc limit #{pageNum},#{limit} ")
 	//page번 행부터 limit개만 select (0행부터시작함)
 	List<Book> list(Map<String, Object> map);
 

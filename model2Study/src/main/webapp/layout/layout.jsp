@@ -79,12 +79,12 @@
 		</button>
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="main">회원관리</a></li>
+				<li class="nav-item"><a class="nav-link" href="${path}/member/main">회원관리</a></li>
 				<li class="nav-item"><a class="nav-link" href="${path}/board/list?boardid=1">공지사항</a></li>
 				<li class="nav-item"><a class="nav-link" href="${path}/board/list?boardid=2">자유게시판</a></li>
 				<c:if test="${sessionScope.login != null}">
 				<li class="nav-item"><a class="nav-link" href="#">${sessionScope.login}님 하이</a></li>
-				<li class="nav-item"><a class="nav-link" href="logout">로그아웃</a></li>
+				<li class="nav-item"><a class="nav-link" href="${path}/member/logout">로그아웃</a></li>
 				</c:if>
 				<li class="nav-item"><a class="nav-link" href="javascript:history.go(-1)">뒤로가기</a></li>
 				
@@ -102,20 +102,14 @@
 		</div>
 		<div class="footer_company">
 			<ul>
-				<li>상호명 : GooDee Academy</li>
-				<li>대표자 : 이승엽</li>
-				<li>전화 : 02-818-7950</li>
-				<li>개인정보책임자 : 주승재 / jsj@goodee.co.kr</li>
-				<li>(08505) 서울특별시 금천구 가산디지털2로 95 (가산동, km타워) 2층, 3층</li>
+				<li>상호명 : DongCompany </li>
+				<li>대표자 : 유동곤</li>
+				<li>전화 : 010-86948525</li>
+				<li>개인정보책임자 : 유동곤 /ddkk8525@gmail.com</li>
 			</ul>
 		</div>
-		<div class="footer_copyright">Copyright ⓒ GooDee Academy.
+		<div class="footer_copyright">Copyright ⓒ dong Company.
 			Allrights reserved.</div>
 	</footer>
 </body>
 </html>
-
-
-
-
-

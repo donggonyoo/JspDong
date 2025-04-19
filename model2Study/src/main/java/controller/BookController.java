@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.annotation.WebInitParam;
@@ -23,10 +24,13 @@ public class BookController extends MskimRequestMapping {
 		String writer = request.getParameter("writer");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
+		Date dt = new Date();//작성한 날짜시간
+		
 		Book book = new Book();
 		book.setWriter(writer);
 		book.setTitle(title);
 		book.setContent(content);
+		book.setDt(dt);
 		if(dao.insert(book)) {
 			request.setAttribute("msg", "성공");
 			request.setAttribute("url", "bookList");

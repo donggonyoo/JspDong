@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
 <%-- /webapp/view/book/bookList.jsp : 방명록 목록 조회하기
 --%>    
 <!DOCTYPE html>
@@ -13,15 +14,20 @@
 <h2>회원목록</h2>
 <table class="table">
 
-<tr><th> </th><th>작성자</th><th>제목</th><th>내용</th></tr>
+<tr>
+<th> </th><th>작성자</th><th>제목</th>
+<th>내용</th><th>등록일</th>
+</tr>
 <c:forEach var="b" items="${list}">
 <tr>
 <c:set var="num" value="${num}"></c:set>
-<td>${num}</td>
+<td style="color:purple">${num}</td>
 <c:set var="num" value="${num-1}"></c:set>
 <td>${b.writer}</td>
 <td>${b.title}</td>
 <td>${b.content}</td>
+<fmt:formatDate value="${b.dt}" type="both" var="dt"/> <!-- 날짜포맷팅을위함 -->
+<td>${dt}</td>
 </tr>
 </c:forEach>
 	<tr><td colspan="5" align="center">
@@ -40,7 +46,7 @@
 			<a href="bookList?pageNum=${pageNum+1}">[다음]</a>
 		</c:if>
 	</td></tr>
-<tr><td colspan="3"><p align="right"><a href="bookForm" >[글쓰기]</a></p></tr>
+<tr><td colspan="5"><p align="right"><a href="bookForm" class="btn btn-outline-primary ">[글쓰기]</a></p></tr>
 </table>
 </body>
 </html>

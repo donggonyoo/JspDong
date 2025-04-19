@@ -1,10 +1,22 @@
 package model.book;
 
+import java.util.Date;
+
 public class Book {
 
 	private String writer;
 	private String title;
 	private String content;
+	private Date dt;
+	
+	
+	
+	public Date getDt() {
+		return dt;
+	}
+	public void setDt(Date dt) {
+		this.dt = dt;
+	}
 	public String getWriter() {
 		return writer;
 	}
@@ -25,8 +37,9 @@ public class Book {
 	}
 	@Override
 	public String toString() {
-		return "Book [writer=" + writer + ", title=" + title + ", content=" + content + "]";
+		return "Book [writer=" + writer + ", title=" + title + ", content=" + content + ", dt=" + dt + "]";
 	}
+
 	
 	
 	

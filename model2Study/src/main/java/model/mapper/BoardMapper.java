@@ -39,8 +39,8 @@ public interface BoardMapper {
 	int UpdateCnt(Map<String, Object> map);
 
 	//같은 grp에서 grpstep이 자신보다큰 레코드는 grpstep +1
-	// 답글이 1개가있다고 가정하면 그 답글 위에 달아야한다.)
 	//답글은 grpstep의 오름차순으로 정렬이된다
+	//참고로 넘어오는 grpstep은 무조건0(원본)이 될거임
 	@Update("update board set grpstep = grpstep+1 where grp=#{grp} and grpstep > #{grpstep}")
 	void grpStepAdd(Map<String, Object> map);
 

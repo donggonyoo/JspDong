@@ -26,11 +26,11 @@ public class BoardController extends MskimRequestMapping {
 
 
 	public String noticeCheck(HttpServletRequest request , 
-			HttpServletResponse response) {
+			HttpServletResponse response) { //관리자만 접근할수있게
 		String login = (String)request.getSession().getAttribute("login");
 		String boardid = (String)request.getSession().getAttribute("boardid");
 
-		if(login==null) {
+		if(!login.equals("admin")) {
 			request.setAttribute("msg", "관리자만 글쓸수있어요");
 			request.setAttribute("url",
 					request.getContextPath()+"/board/list?boardid="+boardid);
@@ -39,8 +39,8 @@ public class BoardController extends MskimRequestMapping {
 		return null;	
 	}
 
-	@RequestMapping("writeForm")
-	@MSLogin("noticeCheck")
+	@RequestMapping("writeForm") 
+	@MSLogin("noticeCheck") 	//writeForm에 접속 시 실행됨
 	public String writeForm(HttpServletRequest request , 
 			HttpServletResponse response) {
 		return "board/writeForm";
@@ -60,6 +60,8 @@ public class BoardController extends MskimRequestMapping {
 		int size = 10*10*1024;//10M(업로드파일의 최대크기)
 		MultipartRequest multi = null;
 		try {
+			//form을 enctype=multipart/form-data로 전달 시
+			//request를 사용할수없음!!!MultipartRequest을 이용해받아서사용하자
 			multi = new MultipartRequest(request, path,size,"UTF-8");
 		}
 		catch (Exception e) {
@@ -71,27 +73,26 @@ public class BoardController extends MskimRequestMapping {
 		board.setTitle(multi.getParameter("title"));
 		board.setContent(multi.getParameter("content"));
 		board.setFile1(multi.getFilesystemName("file1")); //업로드된 파일명
+		//list에서 boardid를 세션으로등록함.
 		String boardid = (String)request.getSession().getAttribute("boardid");
 		if(boardid==null) {
 			boardid="1"; // 공지사항 기본게시판으로설정
 		}
 		board.setBoardid(boardid);//게시판종류 1:공지사항 , 2:자유게시판
 
-		if(board.getFile1()==null) {
+		if(board.getFile1()==null) {//file을 등록하지않았다면 빈값이 들어감
 			board.setFile1("");
 		}
-		int num = dao.maxnum();//가장큰 키값을 가져옴
+		int num = dao.maxnum();//가장큰 키값(num)을 가져옴
 		board.setNum(++num); // 게시글 키값(게시글번호)
 		board.setGrp(num); // 그룹번호
-		String msg="게시물등록실패";
-		String url = "writeForm";
+	
 		if(dao.insert(board)) {
 			return "redirect:list?boardid="+boardid;
 		}
-		request.setAttribute("msg", msg);
-		request.setAttribute("url", url);
+		request.setAttribute("msg", "게시물등록실패");
+		request.setAttribute("url",  "writeForm");
 		return "alert";
-
 	}
 
 	/*
@@ -111,6 +112,7 @@ public class BoardController extends MskimRequestMapping {
 			pageNum = Integer.parseInt(request.getParameter("pageNum"));
 
 		} catch (NumberFormatException e) {}
+		
 		//boardid파라미터값 
 		String boardid = request.getParameter("boardid");
 		if(boardid==null || boardid.trim().equals("")) {
@@ -235,7 +237,8 @@ public class BoardController extends MskimRequestMapping {
 	@RequestMapping("reply")
 	public String reply(HttpServletRequest request , 
 			HttpServletResponse response) {
-		Board b = new Board();
+		
+		//원글 정보
 		int num = Integer.parseInt(request.getParameter("num"));
 		int grp = Integer.parseInt(request.getParameter("grp"));
 		int grpstep = Integer.parseInt(request.getParameter("grpstep"));
@@ -243,14 +246,16 @@ public class BoardController extends MskimRequestMapping {
 		String boardid = request.getParameter("boardid");
 
 		//답글정보
-		b.setGrp(grp);//grp는 답글도 똑같음
-		b.setBoardid(boardid);
+		Board b = new Board();
+		b.setGrp(grp);
+		b.setBoardid(boardid); //원글과 grp, boardid는 동일함
+		
 		b.setWriter(request.getParameter("writer"));
 		b.setPass(request.getParameter("pass"));
 		b.setTitle(request.getParameter("title"));
 		b.setContent(request.getParameter("content"));
 
-		//2. 같은 grp에속하는 게시물들의 grpstep값 1증가시키기
+		//2. 같은 grp에속하는 게시물들의 grpstep(답글의순서 라고보면될듯)값 1증가시키기
 		dao.grpStepAdd(grp,grpstep);
 
 		//3.Board에 저장된 답글정보를 db에추가하기
@@ -293,6 +298,8 @@ public class BoardController extends MskimRequestMapping {
 		int size = 10*10*1024;//10M(업로드파일의 최대크기)
 		MultipartRequest multi = null;
 		try {
+			//enctype:multipart/form-data로 설정했으므로 일반적으로는 request파라미터를 받을수없음
+			//MultipartRequest을 이용해서 받자
 			multi = new MultipartRequest(request, path,size,"UTF-8");
 		}
 		catch (Exception e) {
@@ -311,7 +318,7 @@ public class BoardController extends MskimRequestMapping {
 
 		//변경한 파일이없다면(변경한 파일만 file1에 들어감)
 		if(b.getFile1()==null || b.getFile1().equals("")) {
-			//이전 첨부파일 유지
+			//이전 첨부파일(file2) 유지
 			b.setFile1(multi.getParameter("file2"));
 		}
 
@@ -361,14 +368,14 @@ public class BoardController extends MskimRequestMapping {
 		}
 		if(dao.grpSearch(grp,grplevel)>0) {
 			request.setAttribute("msg", "답변글부터삭제하세요");
-			request.setAttribute("url", "list");
+			request.setAttribute("url", "list?boardid="+DbBoard.getBoardid());
 			return "alert";
 
 		}
 		else {
 			if(dao.delete(num)) {
 				request.setAttribute("msg", "성공");
-				request.setAttribute("url", "list");
+				request.setAttribute("url", "list?boardid="+DbBoard.getBoardid());
 				return "alert";
 			}
 			else {

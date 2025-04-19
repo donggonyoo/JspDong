@@ -8,7 +8,6 @@
   <!-- 별명들 -->
   <typeAliases>
   	<typeAlias type="model.member.Member" alias="Member"/>
-  	<typeAlias type="model.book.Book" alias="Book"/>
   </typeAliases>
   
   <!-- Connection 객체  -->

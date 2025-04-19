@@ -84,8 +84,8 @@
 <c:if test="${boardid != 1 || sessionScope.login=='admin'}">
 <tr><td colspan="5" style="text-align:right">
 	<p align="right"><a href="writeForm">[글쓰기]</a></p>
-</c:if>
 </td></tr>
+</c:if>
 </table>
 
 </body>
