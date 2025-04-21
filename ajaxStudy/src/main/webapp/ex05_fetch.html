@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>fetch예제2</title>
+</head>
+<body>
+<button onclick="load1('ex03_json.json')">JSON읽기</button>
+<button onclick="load2('ex03_json.json')">JSON읽기2</button>
+<div id="area" style="color:red"></div>
+<div id="area2" style="color:blue"></div>
+<script type="text/javascript">
+function load1(url){
+	fetch(url)
+	.then((r)=>r.text()) /*r.text() : 서버에서응답받은 문자열*/
+	.then((t)=>{ /* t : r.text() */
+		let data= JSON.parse(t); // t를 JSON객체형식으로 변경해(배열)
+		let area = document.querySelector("#area")
+		for(s of data){
+			area.innerHTML += '<p>'+s.author.book+" : "+s.author.pubDate+'</p>'
+		}
+	})
+}
+
+function load2(url){
+	fetch(url)
+	.then((r)=>r.json())/*r.json() : 서버에서 json객체로 받아냄(배열)*/
+	.then(data=>{ //data : r.json()배열
+		let area2 = document.querySelector("#area2")
+		for(s of data){
+			area2.innerHTML += '<p>'+s.author.book+
+			" : "+s.author.pubDate+'</p>'
+		}
+	})
+}
+</script>
+
+</body>
+</html>

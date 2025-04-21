@@ -22,12 +22,27 @@ public interface BoardMapper {
 			+ "0, #{grp} , #{grplevel} , #{grpstep} , #{boardid})")
 	boolean insert(Board board);
 
-	@Select("select count(*) from board where boardid=#{val}")
-	int boardCount(String boardid);
+	
+	String sqlcol =  
+			"<if test='column != null'> "
+			+ "AND ("
+			+ "<if test='col1 != null'> ${col1} LIKE '%${find}%'</if>"
+			  +"<if test='col2 != null'> OR ${col2} LIKE '%${find}%'</if>"
+			  +"<if test='col3 != null'> OR ${col3} LIKE '%${find}%'</if>"
+			 + ")"
+			 + "</if>";
+	
+	@Select({
+		  "<script>",
+		  "SELECT COUNT(*) FROM board",
+		  "WHERE boardid = #{boardid}",
+		 sqlcol,"</script>"
+		})
+	int boardCount(Map<String, Object> map);
 
 	
-	@Select("select * from board where boardid=#{boardid}"
-			+ " order by grp desc , grpstep asc limit #{start},#{limit}")
+	@Select({"<script>","select * from board where boardid=#{boardid}"+
+			sqlcol+" order by grp desc , grpstep asc limit #{start},#{limit}","</script>"})
 	//grp==num  을 내림차순으로함 (최신이 가장 위에뜨게)
 	//start번에서부터   limit개 조회해
 	List<Board> list(Map<String, Object> map);

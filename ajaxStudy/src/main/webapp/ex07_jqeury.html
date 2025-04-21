@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery이용한 ajax</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<button id="btn1">ex07_ajax1.jsp 호출</button>
+<button id="rmbtn1">ex07_ajax1.jsp 호출로 추가된요소 제거</button><br>
+<button id="btn2">ex07_ajax2.jsp 호출</button>
+<button id="rmbtn2">ex07_ajax2.jsp 호출로 추가된요소 제거</button>
+
+
+<script type="text/javascript">
+	$("#rmbtn1").click(function(){
+		$("#one").last().remove(); /*h1태그의 마지막을 지우기*/
+		/*$("h1").eq(-1).remove(); eq(-1) : 뒤에서첫번쨰*/
+		/*$("h1").get(-1).remove(); get(-1) : 뒤에서첫번쨰*/
+		
+	})
+	$(function(){
+		$("#btn1").click(function(){
+			$.ajax("ex07_ajax1.jsp",{
+				success : function(data){
+					$("body").append(data)
+				},
+				error : function(e){
+					alert("서버오류 : "+e.status)
+				}
+			})
+		})
+
+	})
+/*--------------------POST방식-----------------------------*/
+	$("#btn2").click(function(){
+		$.ajax({
+			url : "ex07_ajax2.jsp",
+			type:"POST",
+			/*data : "name=홍길동&age=20",밑에 방식과 같음*/
+			data : {name:"홍길동",age:30},
+			success : function(data){
+				$("body").append(data)
+			},
+			error : function(e){
+				alert("서버오류 : "+e.status)
+			}
+		})
+	})
+	
+	$("#rmbtn2").click(function(){
+		$("#two").last().remove();
+	})
+	
+	
+</script>
+
+</body>
+</html>

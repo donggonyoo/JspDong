@@ -14,6 +14,7 @@ import model.book.Book;
 import model.book.BookDao;
 
 @WebServlet(urlPatterns = {"/book/*"},
+//view파일을 찾을 떄  /view/에서 찾는다
 initParams = {@WebInitParam(name="view",value="/view/")}
 		)
 public class BookController extends MskimRequestMapping {

@@ -48,11 +48,23 @@ public class BoardDao {
 	}
 
 
-	public int boardCount(String boardid) {
+	public int boardCount(String boardid, String column, String find) {
 		
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).boardCount(boardid);
+			map.clear();
+			map.put("boardid", boardid);
+			map.put("column", column);
+			map.put("find", find);
+			if(column!=null) {
+				String[] cols = column.split(",");
+				switch(cols.length) {
+				case 3 : map.put("col3", cols[2].trim());
+				case 2 : map.put("col2", cols[1].trim());
+				case 1 : map.put("col1", cols[0].trim());
+				}//3개가있다면 3개 다 집어넣어야함( break문 안씀)
+			}
+			return session.getMapper(cls).boardCount(map);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -65,12 +77,22 @@ public class BoardDao {
 
 
 	
-	public List<Board> list(String boardid, int pageNum, int limit) {
+	public List<Board> list(String boardid, int pageNum, int limit, String column, String find) {
 		SqlSession session = MyBatisConnection.getConnection();
 		map.clear();
 		map.put("boardid", boardid);
 		map.put("start", (pageNum-1) * limit);
 		map.put("limit", limit);
+		map.put("column", column);
+		map.put("find", find);
+		if(column!=null) {
+			String[] cols = column.split(",");
+			switch(cols.length) {
+			case 3 : map.put("col3", cols[2].trim());
+			case 2 : map.put("col2", cols[1].trim());
+			case 1 : map.put("col1", cols[0].trim());
+			}//3개가있다면 3개 다 집어넣어야함( break문 안씀)
+		}
 		try {
 			return session.getMapper(cls).list(map);
 		}

@@ -120,13 +120,28 @@ public class BoardController extends MskimRequestMapping {
 		}
 		//board값을 session에 등록
 		request.getSession().setAttribute("boardid", boardid);
-
-
+		
+		/*
+		 *검색관련 파라미터추가하기 column , find
+		 *(column과 find값은 두개가 동시에존재해야함)
+		 *하나만 파라미터값이 존재 시 둘다없는것으로 본다
+		 *
+		 *column : 선택값(작성자 , 제목 등)
+		 *find : 입력값
+		 */
+		
+		String column = request.getParameter("column"); //선택한 option
+		String find = request.getParameter("find"); //입력한 값
+		if(column == null || column.equals("")||
+			find == null || find.equals("")) {
+			column = null;
+			find = null;
+		}
 
 		int limit = 10;//페이지당 출력되는 게시물의건수
-		int boardcount = dao.boardCount(boardid);//현재등록된 게시물건수
+		int boardcount = dao.boardCount(boardid,column,find);//현재등록된 게시물건수
 		//pageNum에 해당하는 게시물목록을 최대10개 조회
-		List<Board> list = dao.list(boardid,pageNum,limit);
+		List<Board> list = dao.list(boardid,pageNum,limit,column,find);
 		int maxpage = (int)((double)boardcount/limit + 0.95);
 		/*
 		 * maxpage : 필요한페이지 갯수 

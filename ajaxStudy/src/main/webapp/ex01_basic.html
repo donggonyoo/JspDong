@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>XMLHttpRequest객체</title>
+</head>
+<body>
+<h2>XMLHttpRequest객체</h2>
+<button onclick="loadJson()">요청</button>
+<div id="demo"></div>
+<script type="text/javascript">
+function loadJson(){
+	const xhttp = new XMLHttpRequest();//ajax객체  readyState:0
+	//서버에 요청할수있는 자바스크립트객체
+	xhttp.open("GET","ex01_basic.jsp",true);//open(method,url,비동기방식)
+	//readyState:1
+	
+	xhttp.send(); 
+	//readyState:2
+	
+	/*
+		onreadystatechange : xhttp객체의 상태 변경 시 자동호출되는 함수(콜백함수)
+	*/
+	xhttp.onreadystatechange = function(){
+		/*
+			readyState : ajax상태
+			0 : 객체생성
+			1 : open()실행
+			2 : send()실행(서버에요청만 한 상태 응답X)
+			3 : 서버에 응답 중
+			4 : 서버에서 응답 완료
+			
+			status : 서버에서 응답결과(HTTP응답코드)
+			 200 : 정상처리
+			 404 : 서버페이지없음
+			 500 : 서버페이지에서 오류발생
+		*/
+		if(this.readyState==4 && this.status ==200){ // 정상응답완료
+			//responseText : 서버에서 전달받은 응답메시지
+			alert(this.responseText);
+			document.querySelector("#demo").innerHTML = this.responseText;
+			
+		}
+	}
+}
+</script>
+</body>
+</html>
