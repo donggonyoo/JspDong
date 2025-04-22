@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
     
 <%
-Random r2 = new Random();
+Random r = new Random();
 	/*String[] num2 = new String[10];
 	for(int i=0; i<10; i++){
 		num2[i] = String.valueOf(r2.nextInt(100));// 0~99
@@ -13,7 +13,7 @@ Random r2 = new Random();
 	
 	
 	for(int i=0; i<10; i++){
-		int a  = r2.nextInt(100);// 0~99
+		int a  = r.nextInt(100);// 0~99
 		out.print(a);
 		if(i!=9){
 			out.print(",");

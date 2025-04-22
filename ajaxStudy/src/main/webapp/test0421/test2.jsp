@@ -7,9 +7,10 @@ int a  = Integer.parseInt(request.getParameter("f"));
 int num = Integer.parseInt(request.getParameter("num"));
 Test02 t2 = new Test02();
 out.print(t2.sumVal(a,num));
+
 /*switch(a){
 case 0:{
-		int sum=0;
+		int sum=0; 
 		for(int i =1 ; i<=num ; i++){
 			sum+= i;
 		}

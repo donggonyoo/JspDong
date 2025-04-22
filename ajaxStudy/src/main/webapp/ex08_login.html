@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- 
+	1. 로그인버튼 클릭시 ID,PASS값을 ex08_login.jsp 페이지로전송
+	2.ex08_login.jsp 
+		-member테이블을 읽어 id,pass검증
+		-일치 : 반갑습니다 name 님
+		-불일치 : 없는정보입니다
+-------------------------------
+	아이디 중복버튼 클릭
+	1.id파라미터값 ex08_iddup.jsp로전송
+	2.ex08_iddup.jsp
+	-member 테이블 읽기
+	-존재 : 존재하는 아이디입니다=>(message에출력)
+			입력된id제거
+	-존재안함 : 회원가입이 가능한 아이디입니다	
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+</head>
+<body>
+<form name="f">
+	아이디 : <input type="text" id="id">
+	<input type="button" value="아이디중복" id="btn"><br>
+	비밀번호:<input type="password" id="pass"><br>
+	<input type="submit" value="로그인" id="loginbtn"><br>
+</form>
+<div id="message"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> <!-- jquery사용을위해  -->
+<script type="text/javascript">
+$(function(){
+	$("#loginbtn").click(function(){
+		//파라미터설정
+		let param = {id:$("#id").val() , pass:$("#pass").val()}
+		$.ajax({
+			url:"ex08_login.jsp",
+			type:"POST",
+			data:param,//파라미터전달 
+			success : function(data){ //정상응답완료
+				$("#message").html(data)
+			},
+			error:function(e){//에러
+				alert("서버오류:"+e.status)
+			}
+		})
+		return false; //폼 제출막기위해(페이지 리로드 방지)
+	})
+	
+		$("#btn").click(function(){
+
+		if($("#id").val()==""){
+			$("#message").html("아이디를 입력하세요");
+			return;
+		}
+		//파라미터설정
+		let param = {id:$("#id").val()}
+		$.ajax({
+			url:"ex08_iddup.jsp",
+			type:"POST",
+			data:param,//파라미터전달 
+			success : function(data){ //정상응답완료
+				$("#message").html(data)
+				if($("#result").is(".find")){
+					//result의 id가find면(존재하는아이디) id입력창초기화
+					$("#id").val(""); //입력된아이디값 제거
+				}
+			},
+			error:function(e){//에러
+				alert("서버오류:"+e.status)
+			}
+		})
+		return false; //폼 제출막기위해(페이지 리로드 방지)
+	})
+
+})
+	
+</script>
+</body>
+</html>

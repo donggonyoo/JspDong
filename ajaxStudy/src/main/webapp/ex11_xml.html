@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>XML11</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style type="text/css">
+button{
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+<button id="allbtn">전체 구</button>
+<button onclick="stateprint('east')">동구</button>
+<button  onclick="stateprint('west')">서구</button>
+<button  onclick="stateprint('south')">남구</button>
+<button  onclick="stateprint('north')">북구</button>
+<div id="state"></div>
+<script type="text/javascript">
+$(function(){
+	$("#allbtn").click(function(){
+	$("#state").html(""); //div태그 내용제거
+	$.ajax("ex11_address.xml",{
+		success: function(data){
+		$("#state").append("<ul>");
+		//$(data).find("state") : state태그목록들(배열)
+		$(data).find("state").each(function(){
+				//모든state를 순회함
+			$("#state").append("<li>"+$(this).text()+"</li>")
+		})
+		$("#state").append("</ul>")
+		},
+		error: function(e){
+			alert("서버오류 : "+e.status);
+		}
+	})
+		
+	})
+})
+function stateprint(x){
+	$("#state").html(""); //div태그초기화
+	
+	$.ajax("ex11_address.xml",{
+		success:function(data){
+				$("#state").append("<ul>");
+				$(data).find(x).find("state").each(function(){
+						//state태그 내의 모든 텍스트를 모두 순회
+					$("#state").append("<li>"+$(this).text()+"</li>")
+				})
+				$("#state").append("</ul>")
+				},
+				error: function(e){
+					alert("서버오류 : "+e.status);
+				}
+		})
+	}
+</script>
+
+</body>
+</html>
