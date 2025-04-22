@@ -68,7 +68,8 @@
 }
 </style>
 <sitemesh:write property="head" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="jumbotron text-center" style="margin-bottom: 0">
@@ -107,19 +108,14 @@
 
 	<footer class="footer">
 		<div>
-			<span id="si"> 
-			<select name="si" onchange="getText('si')">
-				<option value="">시,도를 선택하세요</option>
+			<span id="si"> <select name="si" onchange="getText('si')">
+					<option value="">시,도를 선택하세요</option>
 			</select>
-			</span>
-			<span id="gu"> 
-			<select name="gu" onchange="getText('gu')">
-				<option value="">구군 선택하세요</option>
+			</span> <span id="gu"> <select name="gu" onchange="getText('gu')">
+					<option value="">구군 선택하세요</option>
 			</select>
-			</span>
-			<span id="dong"> 
-			<select name="dong" onchange="getText('dong')">
-				<option value="">동리를 선택하세요</option>
+			</span> <span id="dong"> <select name="dong">
+					<option value="">동리를 선택하세요</option>
 			</select>
 			</span>
 		</div>
@@ -138,7 +134,7 @@
 		<div class="footer_copyright">Copyright ⓒ dong Company.
 			Allrights reserved.</div>
 	</footer>
-	
+
 	<script type="text/javascript">
 	$(function(){	
 		$.ajax({
@@ -157,31 +153,39 @@
 				alert("서버오류 : "+e.status)
 			}
 		})
-		
-		function getText(type) {
-			const si = $("select[name=si]").val();
-			const gu = $("select[name=gu]").val();
+	}) //여기까지의부분은 모든 시(name='si')를 AJAX를 통해 가져올거임
+	
+			
+		function getText(type) { // 시 or 도를 선택하면 발생하는 함수
+			const si = $("select[name=si]").val(); //클릭한 시의 vlaue
+			const gu = $("select[name=gu]").val();//클릭한 구의 vlaue
 			let url = "";
 			let targetSelect;
 			
 			if (type === "si") {
 				if (!si) return;
-				url = "${path}/ajax/select?si="+si;
-				targetSelect = $("select[name=gu]");
+				url = "${path}/ajax/select?si="+si; //입력받은si의값을 파라미터로갖는 주소
+				targetSelect = $("select[name=gu]"); //target을 gu에해당하는 select태그로설정
+				// 시를 선택하면 기존 구, 동 초기화
+		        $("select[name=gu]").html('<option value="">구군 선택하세요</option>');
+		        $("select[name=dong]").html('<option value="">동리를 선택하세요</option>');
+		        
 			} else if (type === "gu") {
 				if (!si || !gu) return;
 				url = "${path}/ajax/select?si="+si+"&gu="+gu;
 				targetSelect = $("select[name=dong]");
+				// 구를 선택하면 기존  동 초기화		  
+		        $("select[name=dong]").html('<option value="">동리를 선택하세요</option>');
 			} else {
-				// 'dong'은 선택 이벤트만 존재하고 요청은 보내지 않음
 				return;
 			}
 
-			$.ajax({
-				url: url,
+			$.ajax({ //ajax에 요청을 보낼거임
+				url: url, //위 type에의한  url 설정
 				success: function(data) {
-					const arr = JSON.parse(data);
+					const arr = JSON.parse(data); //성공시 JSON방식(배열)으로 데이터를가져옴
 					$.each(arr, function(i, item) {
+						//해당배열을 순회해서 나온값들을 모두 taget태그하위에 option으로넣는다
 						targetSelect.append("<option>"+item+"</option>"	);
 					});
 				},
@@ -190,8 +194,6 @@
 				}
 			});
 		}
-
-	})
 
 	</script>
 </body>
