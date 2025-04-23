@@ -203,6 +203,40 @@ public class BoardDao {
 		return false;
 		
 	}
+
+
+	public List<Map<String, Object>> boardgraph1() {
+		SqlSession session = MyBatisConnection.getConnection();
+		List<Map<String, Object>> list = null;
+		try {
+			list = session.getMapper(cls).boardgraph1();
+			return list;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			MyBatisConnection.close(session);
+		}
+		return null;
+	}
+
+
+	public List<Map<String, Object>> boardgraph2() {
+		SqlSession session = MyBatisConnection.getConnection();
+		List<Map<String, Object>> list = null;
+		try {
+			list = session.getMapper(cls).boardgraph2();
+			return list;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			MyBatisConnection.close(session);
+		}
+		return null;
+	}
 	
 	
 	

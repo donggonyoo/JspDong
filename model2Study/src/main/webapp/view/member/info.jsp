@@ -8,7 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>info(회원정보)</title>
-<link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 <%--

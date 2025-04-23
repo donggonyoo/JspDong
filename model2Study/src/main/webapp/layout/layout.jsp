@@ -24,6 +24,8 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
 <style>
 .fakeimg {
@@ -103,6 +105,16 @@
 		</div>
 	</nav>
 	<div class="container" style="margin-top: 30px">
+		<div class="row">
+			<div class="col-6" style="border: 1px solid #EEEEEE;">
+				<%-- 작성자별 게시물 등록 건수 pie그래프 : 가장많이작성한작성자 5명만 --%>
+				<canvas id="canvas1"></canvas>
+			</div>
+			<div class="col-6" style="border: 1px solid #EEEEEE;">
+				<%-- 최근작성일자 기준 게시물 등록 건수 pie그래프 : 가장많이작성한작성자 5명만--%>
+				<canvas id="canvas2"></canvas>
+			</div>
+		</div>
 		<sitemesh:write property="body" />
 	</div>
 
@@ -137,6 +149,9 @@
 
 	<script type="text/javascript">
 	$(function(){	
+		piegraph();
+		bargraph();
+		
 		$.ajax({
 			url : "${path}/ajax/select",
 			success: function(data){
@@ -194,7 +209,134 @@
 				}
 			});
 		}
+	
+	
+	function piegraph(){
+		$.ajax("${path}/ajax/graph1",{
+			success: function(data){
+//data : [{"cnt":24,"writer":유동곤"},{"cnt":2,"writer":fff"},{"cnt":2,"writer":admin"},{"cnt":1,"writer":김창민"},{"cnt":1,"writer":김민지"}]
+				pieGraphPrint(data);
+			},
+			error : function(e){
+				alert("서버오류 : "+e.status)
+			}
+		})
+	}
+	
+	function bargraph(){
+		$.ajax("${path}/ajax/graph2",{
+			success: function(data){
+				bargraphPrint(data);
+			},
+			error : function(e){
+				alert("서버오류 : "+e.status)
+			}
+		})
+	}
+	
+	let randomColorFactor = function(){
+		return Math.round(Math.random()*255)//0~255사이의 정수
+	}
+	
+	let randomColor = function(opacity){
+		//rgba(100,100,50,1) : rgba(red,green,blue,투명도)
+		//투명도 : 0~1사이의값,  0:투명 1:불투명
+			return "rgba("+ randomColorFactor()+","
+				+ randomColorFactor() + ","+randomColorFactor()+","
+				+(opacity || ".3")+")";
+		}
+	
+	
+	function pieGraphPrint(data){
+		let rows = JSON.parse(data);
+		console.log(rows);
+		console.log(data);
+		let writers = [] //작성자목록
+		let datas=[] //게시물 갯수
+		let color=[] // 랜덤한Color를 넣어둘곳
+		
+		$.each(rows,function(i,item){//모든데이터를 순회
+
+		//item : {"cnt":3,"writer":"홍길동"}
+			writers[i] = item.writer; // "홍길동"
+			datas[i] = item.cnt; //3
+			color[i] = randomColor(1);
+		})
+		
+		let config = {
+			type:'pie',
+			data : {
+				datasets:[{
+					data : datas,
+					backgroundColor : color
+				}],
+				labels : writers
+			},
+			options : {
+				responsive: true,
+					legend : {position:"right"},
+					title : {
+						display : true,
+						text : '게시물 작성자별 등록건수(최대 5명)',
+						position:'bottom'
+					}
+			}
+		}
+		let ctx = document.querySelector("#canvas1");
+		new Chart(ctx,config)
+	}
+	
+	
+	
+	function bargraphPrint(data){
+		let rows = JSON.parse(data);
+		let dates = [] //작성자목록
+		let cnts=[] //게시물 갯수
+		let color=[] // 랜덤한Color를 넣어둘곳
+		console.log(rows)
+	
+		
+		$.each(rows,function(i,item){//모든데이터를 순회
+			dates[i] = item.date; //날짜(년월일)
+			cnts[i] = item.cnt; //게시물개수
+			color[i] = randomColor(1);
+		})
+		console.log(dates);
+		console.log(cnts);
+		let config = {
+			type:'bar',
+			data : {
+				labels : dates,
+				datasets:[{
+					data : cnts,
+					backgroundColor : color
+				}],
+				
+			},
+			options : {
+				responsive: true,
+					legend : {position:"top"},
+				title : {
+					display : true,
+					text : '날짜별 등록건수(최대5일)',
+					position:'bottom'
+				},
+			scales:{
+				yAxes:[{
+					ticks:{
+						beginAtZero:true
+					},
+				}]
+			}
+				
+			}
+		}
+		let ctx = document.querySelector("#canvas2");
+		new Chart(ctx,config)
+	}
+
 
 	</script>
+
 </body>
 </html>

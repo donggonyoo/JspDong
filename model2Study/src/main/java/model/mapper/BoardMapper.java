@@ -71,4 +71,23 @@ public interface BoardMapper {
 	@Delete("delete from board where num=#{val}")
 	int delete(int num);
 
+	@Select("select writer , count(*) cnt  from board"
+			+ " group by writer order by cnt desc"
+			+ " limit 0,5") //limit 0,5 : 0번째행부터 5개
+	//Map<컬럼명,컬럼값> 형태를 List에 순서대로넣음
+		// ex : {"writer":"길동" , "cnt":4}
+		//		{"writer":"길순" , "cnt":2}
+	List<Map<String, Object>> boardgraph1();
+
+	
+	@Select("select SUBSTR(regdate,1,10) 'date' ,count(*) cnt "
+			+ " from board"
+			+ " group by SUBSTR(regdate,1,10)"
+			+ " order by SUBSTR(regdate,1,10) asc;")
+	List<Map<String, Object>> boardgraph2();
+	
+	
+	
+	
+
 }
