@@ -80,10 +80,12 @@ public interface BoardMapper {
 	List<Map<String, Object>> boardgraph1();
 
 	
-	@Select("select SUBSTR(regdate,1,10) 'date' ,count(*) cnt "
+	@Select("select SUBSTR(regdate,1,10) as 'date' , count(*) as cnt "
 			+ " from board"
 			+ " group by SUBSTR(regdate,1,10)"
-			+ " order by SUBSTR(regdate,1,10) asc;")
+			+ " order by SUBSTR(regdate,1,10) asc"
+			+ " limit 0,5"
+			)
 	List<Map<String, Object>> boardgraph2();
 	
 	

@@ -78,7 +78,7 @@ public class AjaxController extends MskimRequestMapping {
 		return "ajax/select";
 	}
 	
-	@RequestMapping("graph1")
+	/*@RequestMapping("graph1") 구식방법
 	public String graph1(HttpServletRequest request , 
 			HttpServletResponse response) {
 		BoardDao dao = new BoardDao();
@@ -106,9 +106,28 @@ public class AjaxController extends MskimRequestMapping {
 		request.setAttribute("json", sb.toString().trim());
 		return "ajax/graph";
 		
+	}*/
+	
+	@RequestMapping("graph1")
+	public String graph1(HttpServletRequest request , 
+			HttpServletResponse response) {
+		BoardDao dao = new BoardDao();
+		List<Map<String,Object>> list = dao.boardgraph1();
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			String json = objectMapper.writeValueAsString(list);
+			request.setAttribute("json", json);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return "ajax/graph";
+		
 	}
 	
-	/*@RequestMapping("graph2") 구식의방법
+	/*@RequestMapping("graph2") //구식의방법
 	public String graph2(HttpServletRequest request , 
 			HttpServletResponse response) {
 		BoardDao dao = new BoardDao();
@@ -117,12 +136,15 @@ public class AjaxController extends MskimRequestMapping {
 		int i=0;
 		for(Map<String,Object> m : list) {
 			for(Map.Entry<String, Object> me : m.entrySet()) {
-				if(me.getKey().equals("cnt")) {
-					sb.append("{\"cnt\":"+me.getValue()+",");
-				}
 				if(me.getKey().equals("date")) {
-					sb.append("\"date\":\""+me.getValue()+"\"}");
+					sb.append("{\"date\":\""+me.getValue()+"\",");
 				}
+				
+				if(me.getKey().equals("cnt")) {
+					sb.append("\"cnt\":"+me.getValue()+"}");
+				}
+				
+				
 				//하나의 map을 처리
 				
 			}//2번for문종료
@@ -147,8 +169,8 @@ public class AjaxController extends MskimRequestMapping {
 		 ObjectMapper objectMapper = new ObjectMapper();
 		
 		try {
-			// 날짜 포맷 설정
-           /* SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			/* 날짜 포맷 설정
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             objectMapper.setDateFormat(dateFormat);*/
         		   
 			// List<Map<String, Object>>를 JSON 문자열로 변환

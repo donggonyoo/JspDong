@@ -112,7 +112,7 @@
 			</div>
 			<div class="col-6" style="border: 1px solid #EEEEEE;">
 				<%-- 최근작성일자 기준 게시물 등록 건수 pie그래프 : 가장많이작성한작성자 5명만--%>
-				<canvas id="canvas2"></canvas>
+				<canvas id="canvas2" ></canvas>
 			</div>
 		</div>
 		<sitemesh:write property="body" />
@@ -248,9 +248,7 @@
 	
 	
 	function pieGraphPrint(data){
-		let rows = JSON.parse(data);
-		console.log(rows);
-		console.log(data);
+		let rows = JSON.parse(data); //json형식으로데이터를받아
 		let writers = [] //작성자목록
 		let datas=[] //게시물 갯수
 		let color=[] // 랜덤한Color를 넣어둘곳
@@ -267,14 +265,14 @@
 			type:'pie',
 			data : {
 				datasets:[{
-					data : datas,
+					data : datas,//cnt가있는배열
 					backgroundColor : color
 				}],
-				labels : writers
+				labels : writers,
 			},
 			options : {
-				responsive: true,
-					legend : {position:"right"},
+				responsive: true,//반응형차트생성
+					legend : {position:"right"},//label을 우측에위치
 					title : {
 						display : true,
 						text : '게시물 작성자별 등록건수(최대 5명)',
@@ -290,32 +288,31 @@
 	
 	function bargraphPrint(data){
 		let rows = JSON.parse(data);
-		let dates = [] //작성자목록
+		let dates =[] //날짜
 		let cnts=[] //게시물 갯수
 		let color=[] // 랜덤한Color를 넣어둘곳
-		console.log(rows)
+		console.log("rows : ",rows)
+
 	
 		
 		$.each(rows,function(i,item){//모든데이터를 순회
-			dates[i] = item.date; //날짜(년월일)
 			cnts[i] = item.cnt; //게시물개수
+			dates[i] = item.date; //날짜(년월일)
 			color[i] = randomColor(1);
 		})
-		console.log(dates);
-		console.log(cnts);
+
 		let config = {
 			type:'bar',
 			data : {
-				labels : dates,
 				datasets:[{
 					data : cnts,
 					backgroundColor : color
 				}],
-				
+				labels : dates,
 			},
 			options : {
 				responsive: true,
-					legend : {position:"top"},
+					legend : { display: true,position:"right"},
 				title : {
 					display : true,
 					text : '날짜별 등록건수(최대5일)',
@@ -324,6 +321,7 @@
 			scales:{
 				yAxes:[{
 					ticks:{
+						display : true,
 						beginAtZero:true
 					},
 				}]
