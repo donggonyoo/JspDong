@@ -44,7 +44,7 @@ td{
 				Elements img = el.select("img");//img태그들
 				for(Element im : img){
 					if(img!=null){
-						String ab = im.absUrl("src");//src를 가져와 절대경로로바꿈	          
+						String ab = im.absUrl("src");//src를 가져와 절대경로로바꿈	 
 		                img.attr("src", ab); // 바꾼경로를 해당 src에 넣음
 					}
 				}

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-<c:set var="path" value="${pageContext.request.contextPath }" scope="application"></c:set>
+<c:set var="path" value="${pageContext.request.contextPath }"></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +37,7 @@
 		$("#summernote").summernote({
 			height:300,
 			callbacks:{
-				//이미지업로드이벤트발생
+				//onImageUpload : summernote에서 이미지업로드이벤트발생
 				//files : 한개이상의 이미지업로드가능(배열)
 				onImageUpload : function(files){
 					for(let i=0;i<files.length;i++){

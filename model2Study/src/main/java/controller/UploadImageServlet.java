@@ -32,15 +32,16 @@ public class UploadImageServlet extends HttpServlet {
 		Part filePart = request.getPart("file"); //file이름의 데이터를가져옴
 		String fileName = getFileName(filePart); //파일명추출
 		System.out.println("원본" +fileName);
-	    String originalFileName = getFileName(filePart);
+
 	    
 	    // UUID로 고유한 파일명 생성
-	    String savedFileName = UUID.randomUUID().toString() + getFileExtension(originalFileName);
+	    String savedFileName = UUID.randomUUID().toString() + getFileExtension(fileName);
 	    
 		//file.separator : window : \
 		//				   리눅스 : /
 		String uploadPath = //파일업로드되는폴더
 				//C:/java/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/model2Study/uploaded_images
+				//getServletContext : 프로젝트경로
 				getServletContext().getRealPath("")+File.separator+UPLOAD_DIR;
 		File uploadDir = new File(uploadPath);
 		if(!uploadDir.exists()) {
@@ -59,7 +60,6 @@ public class UploadImageServlet extends HttpServlet {
 	
 	private String getFileName(Part part) {
 		//content-disposition : form-data; name="file"; filename="iz.jpg"
-		System.out.println("content-disposition : "+part.getHeader("content-disposition"));
 		for(String content : part.getHeader("content-disposition").split(";")) {
 			if(content.trim().startsWith("filename")) {
 				return content.substring(content.indexOf("=")+1).trim().replace("\"", "");

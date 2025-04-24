@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="path" value="${pageContext.request.contextPath }" scope="application"></c:set>
+<c:set var="path" value="${pageContext.request.contextPath }"></c:set>
 <!-- /webapp/view/board/writeForm.jsp -->
 <!-- 
 	1. boardid가 1인경우 , 관리자가아니면 관리자만 공지사항 글쓰기가 가능합니다
@@ -73,11 +73,11 @@
 		$("#summernote").summernote({
 			height:300,
 			callbacks:{
-				//이미지업로드이벤트발생
+				//onImageUpload : 이미지업로드이벤트발생
 				//files : 한개이상의 이미지업로드가능(배열)
 				onImageUpload : function(files){
 					for(let i=0;i<files.length;i++){
-						sendFile(files[i]); //하나씩 ajax이용해 서버로파일 전송
+						sendFile(files[i]); //파일 하나씩 ajax이용해 서버로파일 전송
 					}
 				}
 			}
@@ -91,11 +91,12 @@
 			//scope="application"추가
 			url : "${path}/board/uploadImage", //업로드의기능만가진서블릿
 			type:"post",
-			data: data, 
+			data: data, //data = 전송받은 이미지파일들
 			processData : false,
 			contentType:false,
 			success: function(url){
 			//url : 업로드된 이미지의 접근url정보
+			//insertImage : image삽입
 				$("#summernote").summernote("insertImage",url);
 			},
 			error : function(e){

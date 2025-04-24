@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-<c:set var="path" value="${pageContext.request.contextPath }" scope="application"></c:set>
+<c:set var="path" value="${pageContext.request.contextPath }" ></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,7 +61,7 @@ function file_delete() {
 		$("#summernote").summernote({
 			height:300,
 			callbacks:{
-				//이미지업로드이벤트발생
+				//onImageUpload : 이미지업로드이벤트발생
 				//files : 한개이상의 이미지업로드가능(배열)
 				onImageUpload : function(files){
 					for(let i=0;i<files.length;i++){
@@ -75,8 +75,7 @@ function file_delete() {
 		let data = new FormData(); //폼데이터수집하고 전송가능한 객체, 파일업로드에사용
 		data.append("file",file); //이미지파일
 		$.ajax({
-			//${path}를 사용하기위해서는 layout부분에 path를 설정한곳에 
-			//scope="application"추가
+		//path는 c:set을 이용해 절대경로로지정하자(최상단에구현)
 			url : "${path}/board/uploadImage", //업로드의기능만가진서블릿에게 요청을보냄
 			type:"post",
 			data: data, 
