@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>간단한막대그래프작성</title>
+</head>
+<body>
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<div><canvas id=myChart></canvas></div>
+<script type="text/javascript">
+const ctx = document.querySelector("#myChart"); //canvas객체
+new Chart(ctx,{
+	type:"bar",//막대그래프
+	data:{
+		labels:["Red","blue","Yellow","Green","Purple","Orange"],
+		datasets:[{
+			label : "# of votes1",
+			data:[12,19,3,5,2,3], //막대그래프의 y축값(높이)라고 봐주면댐
+			borderWidth : 1,
+			backgroundColor :["Red","blue","Yellow","Green","Purple","Orange"]
+		},
+		{
+			label : "# of votes2",
+			data:[5,9,1,10,15,3],
+			borderWidth : 1,
+			backgroundColor :["Red","blue","Yellow","Green","Purple","Orange"]
+		}]
+	},
+	options:{
+		scales:{y:{beginAtZero : true}},
+		plugins: {
+	        legend: {
+	            position: "right" // 범례 위치를 오른쪽으로 설정
+	        }
+	    }
+	},
+	
+})
+
+</script>
+
+
+</body>
+</html>

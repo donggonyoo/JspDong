@@ -29,9 +29,14 @@ public class BoardController extends MskimRequestMapping {
 			HttpServletResponse response) { //관리자만 접근할수있게
 		String login = (String)request.getSession().getAttribute("login");
 		String boardid = (String)request.getSession().getAttribute("boardid");
+		request.setAttribute("msg", "관리자만 글쓸수있어요");
 
-		if(!login.equals("admin")) {
-			request.setAttribute("msg", "관리자만 글쓸수있어요");
+		if(login==null) {
+			request.setAttribute("url",
+			request.getContextPath()+"/member/loginForm");
+		}
+		
+		if(!login.equals("admin") && (boardid==null || boardid.equals("1"))) {
 			request.setAttribute("url",
 					request.getContextPath()+"/board/list?boardid="+boardid);
 			return "alert";
@@ -39,12 +44,14 @@ public class BoardController extends MskimRequestMapping {
 		return null;	
 	}
 
+	@MSLogin("noticeCheck") 
 	@RequestMapping("writeForm") 
-	@MSLogin("noticeCheck") 	//writeForm에 접속 시 실행됨
+		//	writeForm에 접속 시 실행됨
 	public String writeForm(HttpServletRequest request , 
 			HttpServletResponse response) {
 		return "board/writeForm";
 	}
+	
 	
 	@MSLogin("noticeCheck")
 	@RequestMapping("write")
