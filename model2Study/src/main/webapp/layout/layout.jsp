@@ -50,6 +50,7 @@
 	align-items: center;
 }
 
+
 .footer_link a {
 	text-decoration: none;
 	color: black;
@@ -117,13 +118,18 @@
 
 	<div class="container" style="margin-top: 30px">
 		<div class="row">
-			<div class="col-6" style="border: 1px solid #EEEEEE;">
+			<div class="col-4" style="border: 1px solid #EEEEEE;">
 				<%-- 작성자별 게시물 등록 건수 pie그래프 : 가장많이작성한작성자 5명만 --%>
 				<canvas id="canvas1"></canvas>
 			</div>
-			<div class="col-6" style="border: 1px solid #EEEEEE;">
+			<div class="col-4 style="border: 1px solid #EEEEEE;">
 				<%-- 최근작성일자 기준 게시물 등록 건수 pie그래프 : 가장많이작성한작성자 5명만--%>
 				<canvas id="canvas2" ></canvas>
+			</div>
+			
+			<div class="col-4" style="border: 1px solid #EEEEEE;">
+				<%-- 수출입은행 환율--%>
+				<div id="exchange"></div>
 			</div>
 		</div>
 		<sitemesh:write property="body" />
@@ -162,6 +168,7 @@
 	$(function(){	
 		piegraph();
 		bargraph();
+		exchangeRate();
 		
 		$.ajax({
 			url : "${path}/ajax/select",
@@ -180,6 +187,17 @@
 			}
 		})
 	}) //여기까지의부분은 모든 시(name='si')를 AJAX를 통해 가져올거임
+	
+	function exchangeRate(){
+		$.ajax("${path}/ajax/exchange",{
+			success : function(data){
+				$("#exchange").html(data);
+			},
+			error:function(e){
+				alert("오류 : "+e.status);
+			}
+		})
+	}
 	
 			
 		function getText(type) { // 시 or 도를 선택하면 발생하는 함수
@@ -343,6 +361,8 @@
 		let ctx = document.querySelector("#canvas2");
 		new Chart(ctx,config)
 	}
+	
+	
 
 
 	</script>
