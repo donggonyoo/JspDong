@@ -86,7 +86,7 @@
 	}	
 	
 	
-	//국제금 국내금 제외시키기
+	//국제금 국내금 제외시키기(맨뒤에위치)
 	for(int i=1;i<=2;i++){
 		codes.remove(codes.size()-1);
 		changes.remove(changes.size()-1);
@@ -139,7 +139,7 @@ window.onload = function(){
 		data:chartData1,
 		options:{
 			responsive : true,
-			title : {diplay:true , text:'네이버금융데이터'},
+			title : {diplay:true , text:'네이버금융데이터(변동율)'},
 			legend : {display : false}
 		}
 	})

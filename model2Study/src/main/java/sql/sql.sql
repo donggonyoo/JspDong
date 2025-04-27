@@ -1,5 +1,6 @@
 select * from member;
 
+
 create table board(
 	num int auto_increment primary key, -- 게시글 번호(기본키)
 	writer varchar(30), -- 작성자

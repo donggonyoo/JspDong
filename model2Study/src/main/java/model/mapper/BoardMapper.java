@@ -88,6 +88,12 @@ public interface BoardMapper {
 			)
 	List<Map<String, Object>> boardgraph2();
 	
+	@Select("SELECT date_format(regdate,'%Y-%m-%d') as 'date' ,count(*) cnt FROM board "
+			+ "	group by date_format(regdate,'%Y-%m-%d') "
+			+ "	order by 1 desc"
+			+ "	limit 0,7")
+	List<Map<String, Object>> graph2();
+	
 	
 	
 	

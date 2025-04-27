@@ -478,6 +478,9 @@ public class MemberController extends MskimRequestMapping {
 		String email = request.getParameter("email");
 		String tel = request.getParameter("tel");
 		String pass = dto.pwSearch(id, tel, email);
+		//String rPass = UUID.randomUUID().toString().substring(0,8);
+		//dto.updatePass(id,rpass);
+		
 		//MemberDto에 가서 DB정보와비교해 가져온다
 		if(pass==null) {
 			request.setAttribute("msg", "password를 찾을수없어요");
@@ -486,6 +489,7 @@ public class MemberController extends MskimRequestMapping {
 		}
 		else {
 			request.setAttribute("msg", id+"님의 password : "+pass.substring(0,pass.length()-2)+"**");
+			//request.setAttribute("msg", "임시비번 : "+rPass);
 			request.setAttribute("pass", pass);
 			return "pwSearch";
 		}

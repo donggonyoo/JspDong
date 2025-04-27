@@ -58,6 +58,7 @@ pageContext.setAttribute("title", title);
 			</c:when>
 			<c:otherwise>
 				<tr><td>${title[stat.index -2]}</td><td>${td}</td></tr>
+				<!-- title[1]~~title[5] -->
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>

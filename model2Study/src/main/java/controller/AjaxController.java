@@ -199,6 +199,7 @@ public class AjaxController extends MskimRequestMapping {
 		try {
 			doc = Jsoup.connect(url).get(); //url연결
 			Elements trs = doc.select("tr");//tr들 가져오기
+			System.out.println(trs);
 			exdate = doc.select("p.table-unit").html(); //날짜태그
 			for(Element tr : trs) {
 				List<String> tdList = new ArrayList<>();
@@ -214,9 +215,7 @@ public class AjaxController extends MskimRequestMapping {
 						list.add(tdList);
 					}
 				}
-			}
-			
-			
+			}	
 		}
 		catch (Exception e) {
 			e.printStackTrace();

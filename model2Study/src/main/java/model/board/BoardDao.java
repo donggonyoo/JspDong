@@ -226,7 +226,7 @@ public class BoardDao {
 		SqlSession session = MyBatisConnection.getConnection();
 		List<Map<String, Object>> list = null;
 		try {
-			list = session.getMapper(cls).boardgraph2();
+			list = session.getMapper(cls).graph2();
 			return list;
 
 		} catch (Exception e) {
