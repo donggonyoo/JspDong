@@ -16,12 +16,15 @@ import gdu.mskim.MskimRequestMapping;
 import gdu.mskim.RequestMapping;
 import model.board.Board;
 import model.board.BoardDao;
+import model.comment.Comment;
+import model.comment.CommentDao;
 
 @WebServlet(urlPatterns = {"/board/*"},
 initParams = {@WebInitParam(name="view",value="/view/")}
 		)
 public class BoardController extends MskimRequestMapping {
 	private BoardDao dao =  new BoardDao();
+	private CommentDao comdao =  new CommentDao();
 
 
 
@@ -206,30 +209,69 @@ public class BoardController extends MskimRequestMapping {
 	 * 4.조회된게시물 화면에 전달
 	 */
 	@RequestMapping("info")
-	public String info(HttpServletRequest request , 
-			HttpServletResponse response) {
-		int num = Integer.parseInt(request.getParameter("num"));	
-		Board board = dao.numSearch(num);
-
-		if(board != null) {
-			String boardid = board.getBoardid();
-			String boardName = "공지사항";
-			if(boardid.equals("2")) {
-				boardName ="자유게시판";
-			}
-			if(dao.UpdateCnt(board.getReadcnt()+1,num)>0) {	
-				request.setAttribute("b", board);
-				request.setAttribute("boardName", boardName);
-				return "board/info";
-			}
-			else {
-				return "redirect:board/list?boardid="+boardid;
-			}
-		}else {
-			return "redirect:board/list";
+	public String info(HttpServletRequest request, HttpServletResponse response) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		String readcnt = request.getParameter("readcnt");
+//		String boardid = (String)request.getSession().getAttribute("boardid");
+		// b : num 값의 게시물 데이터 저장
+		Board b = dao.numSearch(num);
+		// readcnt 파라미터의 값이 "f"인 경우 조회수 증가 안함.
+		if(readcnt == null || !readcnt.trim().equals("f")) {
+			dao.readcntAdd(num); // 조회수 증가
 		}
-
+		String boardid = b.getBoardid();
+		String boardName = "공지사항";
+		if(boardid.equals("2")) {
+			boardName = "자유게시판";
+		}
+		List<Comment> commlist = comdao.list(num);
+		request.setAttribute("b",b);
+		request.setAttribute("boardName", boardName);
+		request.setAttribute("boardid", boardid);
+		request.setAttribute("commlist", commlist); // 댓글 목록 view로 전달
+		return "board/info";
 	}
+	
+	@RequestMapping("comment")
+	public String comment(HttpServletRequest request , 
+			HttpServletResponse response) {
+		Comment comm = new Comment();
+		comm.setNum(Integer.parseInt(request.getParameter("num")));
+		comm.setWriter(request.getParameter("writer"));
+		comm.setContent(request.getParameter("content"));
+		int seq = comdao.maxseq(comm.getNum());
+		comm.setSeq(seq+1);
+		if(comdao.insert(comm)) {
+			return "redirect:info?num="+comm.getNum();
+		}
+		request.setAttribute("msg", "오류발생(댓글)");
+		request.setAttribute("url", "info?num="+comm.getNum()+"&readcnt=f");
+		return "alert";
+	}
+	
+	/*
+	 * 삭제는 누구든지 가능 (수정필요)
+	 * 비밀번호를 입력 or 로그인정보로 판단 필요
+	 * 현재는 그냥 기능만구현하는거임
+	 */
+	@RequestMapping("commdel")
+	public String commdel(HttpServletRequest request , 
+			HttpServletResponse response) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		int seq = Integer.parseInt(request.getParameter("seq"));
+		String url = "info?num="+num+"&readcnt=f";
+		if(comdao.delete(num,seq)) {
+			return "redirect:"+url;
+		}
+		request.setAttribute("msg", "삭제 실패");
+		request.setAttribute("url", url);
+		return null;
+	}
+	
+	
+	
+	
+	
 	@MSLogin("noticeCheck")
 	@RequestMapping("replyForm")
 	public String replyForm(HttpServletRequest request , 

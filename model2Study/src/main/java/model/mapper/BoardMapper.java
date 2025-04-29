@@ -50,8 +50,8 @@ public interface BoardMapper {
 	@Select("select * from board where num=#{num}")
 	Board numSearch(int num);
 
-	@Update("update board set readcnt=#{readcnt} where num=#{num}")
-	int UpdateCnt(Map<String, Object> map);
+	@Update("update board set readcnt=readcnt+1 where num=#{v}")
+	int readcntAdd(int num);
 
 	//같은 grp에서 grpstep이 자신보다큰 레코드는 grpstep +1
 	//답글은 grpstep의 오름차순으로 정렬이된다

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +28,38 @@ ${b.content}</td></tr></table></td></tr>
 	<a href="updateForm?num=${b.num}">[수정]</a>
 	<a href="deleteForm?num=${b.num}">[삭제]</a>
 	<a href="list?boardid=${b.boardid}">[목록]</a>
+</td></tr></table>
+
+
+<%--댓글 등록,조회ㅡ삭제 --%>
+<span id="comment"></span>
+<form action="comment" method="post">
+<input type="hidden" name="num" value="${b.num}"><%--게시물번호 --%>
+<div class="col-4 text-center">
+<p>작성자: <input type="text" name="writer" class="form-control"></p>
+</div>
+<div class="col-7 text-center">
+<p>내용: <input type="text" name="content" class="form-control"></p>
+</div>
+<div class="col-2 text-center">
+<p><button type="submit" class="btn btn-primary">댓글등록</button></p>
+</div>
+</form>
+<div class="contatiner">
+<table class="table">
+<c:forEach var="c" items="${commlist}">
+<tr><td>${c.seq}</td><td>${c.writer}</td>
+<td>${c.content}</td>
+<td>
+<fmt:formatDate value="${c.regdate}" type="both" var="rdate"/>
+${rdate}
+</td>
+<td align="right">
+<a class="btn btn-danger" href="commdel?num=${param.num}&seq=${c.seq}">삭제</a>
 </td></tr>
+</c:forEach>
 </table>
+</div>
 
 </body>
 </html>

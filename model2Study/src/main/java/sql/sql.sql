@@ -22,6 +22,16 @@ select * from board where grp=18 order by grpstep asc;
 
 select * from book;
 
+create table comment(
+	num int references board(num) ,
+	seq int,
+	writer varchar(30),
+	content varchar(2000),
+	regdate datetime,
+	primary key (num,seq)
+);
+
+select * from comment;
 
 
 

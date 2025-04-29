@@ -121,13 +121,10 @@ public class BoardDao {
 	}
 
 
-	public int UpdateCnt(int readcnt, int num) {
+	public int readcntAdd(int num) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			map.clear();
-			map.put("num", num);
-			map.put("readcnt", readcnt);
-			return session.getMapper(cls).UpdateCnt(map);
+			return session.getMapper(cls).readcntAdd(num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
