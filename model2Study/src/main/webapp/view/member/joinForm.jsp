@@ -20,8 +20,8 @@ return input_check(this) : input_check()함수 호출 , 매개변수this : form�
 		<tr>
 		<td rowspan="4" valign="bottom">
 		<img src="" width="100" height="120"  id="pic"><br>
-
 		<font size="1"><a href="javascript:win_upload()">사진등록</a></font>
+		
 		</td><th>아이디</th>
 		<td><input type="text" name="id"  class="form-control">
 		<button type="button" onclick="idchk()" class="btn btn-dark" id="chk" name="chk">중복검색</button>
@@ -134,12 +134,13 @@ function input_check(f){
 		f.email.focus();
 		return false; 
 	}
-	if(!(valid(f.pass.value.trim()) 
-		&& valid(f.email.value.trim())
-		&& valid(f.tel.value.trim()))){ //3개중 한개라도 유효성검사를 실패했다면 실행
+	if(!(valid(f.pass.value.trim(),"pass")
+		&& valid(f.email.value.trim(),"email")
+		&& valid(f.tel.value.trim(),"tel"))){ //3개중 한개라도 유효성검사를 실패했다면 실행
 	alert("형식을준수해주세요")
 	return false;
 	}
+	
 	return true;//아이디비번이름이 입력됐다면 true
 }
 
