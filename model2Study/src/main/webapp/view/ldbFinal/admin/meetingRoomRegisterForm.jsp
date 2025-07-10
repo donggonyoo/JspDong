@@ -17,7 +17,7 @@
   <form action="roomRegisterProc.jsp" method="post">
     <!-- 설비번호 -->
     <div class="mb-3">
-      <label for="roomId" class="form-label">설비번호</label>
+      <label for="roomId" class="form-label">공용설비ID</label>
       <input type="text" class="form-control" id="roomId" name="roomId" required placeholder="예: R0001">
     </div>
 

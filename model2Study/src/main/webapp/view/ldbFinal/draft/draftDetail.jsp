@@ -31,23 +31,22 @@
             </tr>
             <tr>
                 <th>기안자</th><td>동곤</td>
-                <th>상태</th><td><span class="badge bg-warning text-dark">기안중</span></td>
+                <th>상태</th><td><span class="badge bg-warning text-dark">1차결재 대기</span></td>
             </tr>
             <tr>
-    <th>1차 결재자</th>
-    <td>
-        김이사
-        <span class="badge bg-warning text-dark ms-2">대기</span>
-    </td>
-    <th>2차 결재자</th>
-    <td>
-        박부장
-        <span class="badge bg-secondary ms-2">미진행</span>
-    </td>
-</tr>
-
+                <th>1차 결재자</th>
+                <td>
+                    김이사
+                    <span class="badge bg-warning text-dark ms-2">대기</span>
+                </td>
+                <th>2차 결재자</th>
+                <td>
+                    박부장
+                    <span class="badge bg-secondary ms-2">미진행</span>
+                </td>
+            </tr>
             <tr>
-                <th>마감기한</th><td colspan="3">2025-05-01</td>
+                <th>문서종료일</th><td colspan="3">2025-05-01</td>
             </tr>
         </tbody>
     </table>
@@ -79,12 +78,11 @@
         </tr>
     </table>
 
-    
-            <div>
-                <a href="draftForm.jsp?id=A00001" class="btn btn-outline-primary">재기안</a>
-                <a href="generatePDF.jsp?docId=A00001" class="btn btn-outline-secondary">PDF 저장</a>
-            </div>
-        </div>
+    <!-- ✅ 인쇄 버튼 -->
+    <div class="text-end">
+        <button onclick="window.print()" class="btn btn-outline-secondary">인쇄</button>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

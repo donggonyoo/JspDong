@@ -31,7 +31,7 @@
             </tr>
             <tr>
                 <th>기안자</th><td>동곤</td>
-                <th>상태</th><td><span class="badge bg-warning text-dark">기안중</span></td>
+                <th>상태</th><td><span class="badge bg-warning text-dark">1차결재 대기</span></td>
             </tr>
             <tr>
     <th>1차 결재자</th>

@@ -80,7 +80,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="collapse" href="#approvalSubMenu" role="button" aria-expanded="false" aria-controls="approvalSubMenu">전자결재 ▾</a>
+          <a class="nav-link"id="tab-draft" data-bs-toggle="collapse" href="#approvalSubMenu" role="button" aria-expanded="false" aria-controls="approvalSubMenu">전자결재 ▾</a>
           <div class="collapse ps-3" id="approvalSubMenu">
             <ul class="nav flex-column">
               <li class="nav-item"><a class="nav-link" id="tab-myApproval" data-bs-toggle="pill" href="#content-myApproval" role="tab">내 전자결재</a></li>
@@ -98,7 +98,15 @@
             </ul>
           </div>
         </li>
-        <li class="nav-item"><a class="nav-link" id="tab-calendar" data-bs-toggle="pill" href="#content-calendar" role="tab">캘린더</a></li>
+        <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#CalendarMenu" role="button" aria-expanded="false" aria-controls="facilitySubMenu">캘린더 ▾</a>
+         <div class="collapse ps-3" id="CalendarMenu">
+            <ul class="nav flex-column">
+              <li class="nav-item"><a class="nav-link" id="tab-calendar" data-bs-toggle="pill" href="#content-calendar" role="tab">캘린더조회</a></li>
+              <li class="nav-item"><a class="nav-link" id="tab-calendar" data-bs-toggle="pill" href="#content-calendarRegist" role="tab">일정등록</a></li>              
+            </ul>
+          </div>
+          </li>
         <li class="nav-item"><a class="nav-link" id="tab-email" data-bs-toggle="pill" href="#content-email" role="tab">이메일</a></li>
          <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#adminMenu" role="button" aria-expanded="false" aria-controls="adminMenu">관리자 ▾</a>

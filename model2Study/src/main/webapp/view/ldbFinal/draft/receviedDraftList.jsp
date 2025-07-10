@@ -22,7 +22,7 @@
   <div class="container bg-white p-4 shadow rounded">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h2>받은 전자결재</h2>
-      <span class="text-muted">결재자: <strong>김대리</strong></span>
+     
     </div>
 
     <table class="table table-hover table-bordered text-center align-middle">
@@ -30,7 +30,7 @@
         <tr>
           <th>문서번호</th>
           <th>제목</th>
-          <th>기한</th>
+          <th>문서종료일</th>
           <th>기안자</th>
           <th>1차 결재자</th>
           <th>2차 결재자</th>
@@ -46,7 +46,7 @@
           <td>동곤</td>
           <td>김대리</td>
           <td>이과장</td>
-          <td><span class="badge bg-warning text-dark">기안중</span></td>
+          <td><span class="badge bg-warning text-dark">1차결재 대기</span></td>
           <td><a href="draftManagement.jsp?id=A00001" class="btn btn-sm btn-outline-primary">보기</a></td>
         </tr>
         <tr>
@@ -56,7 +56,7 @@
           <td>동곤</td>
           <td>김대리</td>
           <td>이과장</td>
-          <td><span class="badge bg-success">결재 완료</span></td>
+          <td><span class="badge bg-success">2차결재 승인</span></td>
           <td><a href="draftManagement.jsp?id=A00002" class="btn btn-sm btn-outline-primary">보기</a></td>
         </tr>
         <tr>
@@ -66,7 +66,7 @@
           <td>동곤</td>
           <td>김대리</td>
           <td>이과장</td>
-          <td><span class="badge bg-warning text-dark">기안중</span></td>
+          <td><span class="badge bg-warning text-dark">1차결재 대기</span></td>
           <td><a href="draftManagement.jsp?id=A00003" class="btn btn-sm btn-outline-primary">보기</a></td>
         </tr>
         <tr>
@@ -76,7 +76,7 @@
           <td>동곤</td>
           <td>김대리</td>
           <td>이과장</td>
-          <td><span class="badge bg-warning text-dark">기안중</span></td>
+          <td><span class="badge bg-warning text-dark">1차결재 대기</span></td>
           <td><a href="draftManagement.jsp?id=A00004" class="btn btn-sm btn-outline-primary">보기</a></td>
         </tr>
         <tr>
@@ -86,7 +86,7 @@
           <td>동곤</td>
           <td>김대리</td>
           <td>이과장</td>
-          <td><span class="badge bg-success">결재 완료</span></td>
+          <td><span class="badge bg-success">2차결재 승인</span></td>
           <td><a href="draftManagement.jsp?id=A00005" class="btn btn-sm btn-outline-primary">보기</a></td>
         </tr>
       </tbody>

@@ -17,34 +17,22 @@
   <form action="vehicleRegisterProc.jsp" method="post">
     <!-- 설비번호 -->
     <div class="mb-3">
-      <label for="vehicleId" class="form-label">설비번호</label>
+      <label for="vehicleId" class="form-label">공용설비ID</label>
       <input type="text" class="form-control" id="vehicleId" name="vehicleId" required placeholder="예: K0001">
     </div>
 
-    <!-- 차종 -->
+  <!-- 모델명 -->
     <div class="mb-3">
-      <label for="type" class="form-label">차종</label>
-      <select id="type" name="type" class="form-select" required>
-        <option value="">-- 선택 --</option>
-        <option value="세단">세단</option>
-        <option value="SUV">SUV</option>
-        <option value="승합차">승합차</option>
-        <option value="트럭">트럭</option>
-        <option value="전기차">전기차</option>
-      </select>
+      <label for="carName" class="form-label">차량이름</label> 
+      <input type="text" class="form-control" id="carName" name="carName" required>
     </div>
 
     <!-- 차량번호 -->
     <div class="mb-3">
-      <label for="number" class="form-label">차량번호</label>
+      <label for="number" class="form-label">차량번호</label> <!--uid(식별번호) -->
       <input type="text" class="form-control" id="number" name="number" required placeholder="예: 12가1234">
     </div>
 
-    <!-- 색상 -->
-    <div class="mb-3">
-      <label for="color" class="form-label">색상</label>
-      <input type="text" class="form-control" id="color" name="color" required placeholder="예: 흰색">
-    </div>
 
     <!-- 수용인원 -->
     <div class="mb-4">

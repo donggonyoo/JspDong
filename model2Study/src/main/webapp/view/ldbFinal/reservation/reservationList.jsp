@@ -44,41 +44,33 @@
   <table class="table table-bordered text-center align-middle">
     <thead class="table-light">
       <tr>
-        <th>예약유형</th>
-        <th>차종/회의실명</th>
+        <th>공용설비ID</th>
+        <th>유형</th>
+        <th>설비이름</th>
         <th>예약일</th>
-        <th>시간</th>
-        <th>예약자</th>
-        <th>상태</th>
         <th>취소</th>
       </tr>
     </thead>
     <tbody>
       <tr>
+        <td>K0002</td>
         <td>차량</td>
-        <td>SUV / 34나5678</td>
+        <td>911 / 34나5678</td>
         <td>2025-07-15</td>
-        <td>09:00 ~ 18:00</td>
-        <td>동곤</td>
-        <td><span class="badge bg-success">예약 완료</span></td>
         <td><button class="btn btn-sm btn-outline-danger">취소</button></td>
       </tr>
       <tr>
+        <td>R0002</td>
         <td>회의실</td>
         <td>대회의실</td>
         <td>2025-07-20</td>
-        <td>13:00 ~ 15:00</td>
-        <td>동곤</td>
-        <td><span class="badge bg-success">예약 완료</span></td>
         <td><button class="btn btn-sm btn-outline-danger">취소</button></td>
       </tr>
       <tr>
+        <td>K0005</td>
         <td>차량</td>
-        <td>전기차 / 90마1111</td>
+        <td>macan / 90마1111</td>
         <td>2025-07-25</td>
-        <td>10:00 ~ 17:00</td>
-        <td>동곤</td>
-        <td><span class="badge bg-warning text-dark">예약 대기</span></td>
         <td><button class="btn btn-sm btn-outline-danger">취소</button></td>
       </tr>
     </tbody>
