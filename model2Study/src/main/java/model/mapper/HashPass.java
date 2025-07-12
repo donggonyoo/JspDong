@@ -8,7 +8,6 @@ public class HashPass {
 		String hashpw = BCrypt.hashpw(pass, BCrypt.gensalt());
 		System.out.println(pass+":"+hashpw);
 		System.out.println( BCrypt.checkpw(pass, hashpw));
-		System.out.println("zzz");
 	}
 
 }
