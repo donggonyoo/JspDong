@@ -146,19 +146,7 @@ function input_check(f){
 function win_upload(){
 	let op = "width=500,height=500 ,top=50 ,left=150";
 	open("pictureForm","",op);
-	//pictureForm.jsp를 연다
-}
-
-function idchk(){
-if(document.f.id.value==''){
-	alert("아이디를 입력하세요");
-	document.f.id.focus();
-	}
-else{
-	let op="width=500,height=200,left=50,right=150";
-	open("idchk?id="+document.f.id.value,"",op);
-}
-	
+	//pictureForm.jsp를 연다 (해당페이지가 opener가 될것임)
 }
 
 </script>
